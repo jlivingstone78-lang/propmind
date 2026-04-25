@@ -473,33 +473,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
       </div>
     </div>
 
-    <!-- New Charts Row -->
-    <div class="chrow" style="grid-template-columns:2fr 1fr">
+    <!-- Charts Row 2: responseTimeChart + volCatChart + satisfactionChart -->
+    <div class="chrow" style="grid-template-columns:1fr 1fr 1fr">
 
-      <!-- Chart 1: Average Response Time (line) -->
-      <div class="ccard">
-        <div class="ctitle">Response Time: Before vs With PropMind</div>
-        <div class="csub">Average response time in minutes — last 7 days (Mon–Sun)</div>
-        <div class="cwrap line"><canvas id="respTimeChart" style="max-height:215px"></canvas></div>
-        <div class="cleg" style="flex-direction:row;gap:18px;justify-content:center;margin-top:14px">
-          <div class="crow"><div class="cdot" style="background:#f97316"></div><div class="clbl">Before PropMind</div></div>
-          <div class="crow"><div class="cdot" style="background:#3b82f6"></div><div class="clbl">With PropMind</div></div>
-        </div>
-      </div>
-
-      <!-- Chart 2: Email Volume by Category (donut) -->
-      <div class="ccard">
-        <div class="ctitle">Email Volume by Category</div>
-        <div class="csub">Percentage breakdown across all categories</div>
-        <div class="cwrap donut"><canvas id="volCatChart"></canvas></div>
-        <div class="cleg" id="volCatLeg"></div>
-      </div>
-
-
-    <!-- New Charts Row 2 -->
-    <div class="chrow" style="grid-template-columns:2fr 1fr">
-
-      <!-- Chart: Response Time Before vs With PropMind (responseTimeChart) -->
+      <!-- Chart: Response Time Before vs With PropMind -->
       <div class="ccard">
         <div class="ctitle">Response Time: Before vs With PropMind</div>
         <div class="csub">Average response time in minutes — Mon to Sun</div>
@@ -510,14 +487,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
         </div>
       </div>
 
-      <!-- Chart: Tenant Satisfaction (satisfactionChart) -->
+      <!-- Chart: Email Volume by Category (donut) -->
+      <div class="ccard">
+        <div class="ctitle">Email Volume by Category</div>
+        <div class="csub">Percentage breakdown across all categories</div>
+        <div class="cwrap donut"><canvas id="volCatChart"></canvas></div>
+        <div class="cleg" id="volCatLeg"></div>
+      </div>
+
+      <!-- Chart: Tenant Satisfaction -->
       <div class="ccard">
         <div class="ctitle">Tenant Satisfaction</div>
         <div class="csub">Weekly satisfaction score (out of 10)</div>
         <div class="cwrap line"><canvas id="satisfactionChart" style="max-height:215px"></canvas></div>
       </div>
 
-    </div>
     </div>
 
   </div>
@@ -1212,72 +1196,6 @@ new Chart(document.getElementById('timeSavedChart'), {
   }
 });
 
-/* ═══ NEW CHART 1: Response Time Before vs With PropMind ═══ */
-new Chart(document.getElementById('respTimeChart'), {
-  type: 'line',
-  data: {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'Before PropMind',
-        data: [265, 310, 280, 340, 295, 260, 305],
-        borderColor: '#f97316',
-        backgroundColor: 'rgba(249,115,22,.12)',
-        borderWidth: 2.5,
-        pointBackgroundColor: '#f97316',
-        pointBorderColor: '#f97316',
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        fill: true,
-        tension: 0.4,
-      },
-      {
-        label: 'With PropMind',
-        data: [22, 19, 24, 18, 21, 25, 20],
-        borderColor: '#3b82f6',
-        backgroundColor: 'rgba(59,130,246,.12)',
-        borderWidth: 2.5,
-        pointBackgroundColor: '#3b82f6',
-        pointBorderColor: '#3b82f6',
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        fill: true,
-        tension: 0.4,
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => \` \${ctx.dataset.label}: \${ctx.raw} min\`
-        }
-      }
-    },
-    scales: {
-      x: {
-        grid: { color: 'rgba(30,45,69,.7)' },
-        ticks: { color: '#94a3b8' }
-      },
-      y: {
-        grid: { color: 'rgba(30,45,69,.7)' },
-        ticks: { color: '#94a3b8', callback: v => v + ' min' },
-        beginAtZero: true,
-        suggestedMax: 360,
-        title: {
-          display: true,
-          text: 'Minutes',
-          color: '#475569',
-          font: { size: 10 }
-        }
-      }
-    },
-    animation: { duration: 1100, easing: 'easeOutQuart' }
-  }
-});
-
 /* ═══ NEW CHART 2: Email Volume by Category (donut) ═══ */
 const volCatLabels = ['Maintenance', 'Lease Enquiries', 'Payment Issues', 'Complaints', 'General Enquiries'];
 const volCatData   = [34, 22, 18, 12, 14];
@@ -1301,7 +1219,7 @@ new Chart(document.getElementById('volCatChart'), {
       legend: { display: false },
       tooltip: {
         callbacks: {
-          label: ctx => \` \${ctx.label}: \${ctx.raw}%\`
+          label: ctx => ` ${ctx.label}: ${ctx.raw}%`
         }
       }
     },
@@ -1313,8 +1231,8 @@ new Chart(document.getElementById('volCatChart'), {
 const volCatLegEl = document.getElementById('volCatLeg');
 volCatLabels.forEach((l, i) => {
   volCatLegEl.insertAdjacentHTML('beforeend',
-    \`<div class="crow"><div class="cdot" style="background:\${volCatColors[i]}"></div>
-     <div class="clbl">\${l}</div><div class="cval">\${volCatData[i]}%</div></div>\`);
+    `<div class="crow"><div class="cdot" style="background:${volCatColors[i]}"></div>
+     <div class="clbl">${l}</div><div class="cval">${volCatData[i]}%</div></div>`);
 });
 /* ═══ NEW CHART: responseTimeChart — Response Time Line ═══ */
 new Chart(document.getElementById('responseTimeChart'), {
