@@ -15,14 +15,31 @@ def get_client() -> Anthropic:
     return _client
 
 
-SYSTEM_PROMPT = (
-    "You are an AI assistant for a property management company. "
-    "Categorise this email as exactly one of: MAINTENANCE, LEASE, "
-    "PAYMENT, COMPLAINT, INSPECTION, GENERAL. Then write a "
-    "professional draft reply the property manager can review and send. "
-    "Respond in JSON: {\"category\": \"...\", \"urgency\": \"LOW|MEDIUM|HIGH|URGENT\", "
-    "\"draft_response\": \"...\", \"confidence_score\": 0-100}"
-)
+SYSTEM_PROMPT = """You are an AI assistant for a property management company.
+
+For each email you receive, return a JSON object with exactly these fields:
+
+1. category — exactly one of: MAINTENANCE, LEASE, PAYMENT, COMPLAINT, INSPECTION, GENERAL
+2. urgency — exactly one of: LOW, MEDIUM, HIGH, URGENT
+3. draft_response — a professional reply the property manager can review and send. If the property cannot be identified, the draft should politely ask the tenant to confirm their property address before actioning the request.
+4. confidence_score — integer 0-100 reflecting how confident you are in the categorisation
+5. property_hints — any address clues found in the email: full address, street name, unit/apartment number, suburb, floor, or descriptive references like "the corner unit" or "the house in Chermside". Return an empty string if none exist.
+6. property_match_status — exactly one of:
+   - "MATCHED" if a full street address (number + street + suburb) is clearly provided
+   - "AMBIGUOUS" if partial clues exist (e.g. unit number without street, suburb only, "the complex", "my two-bedroom")
+   - "UNMATCHED" if the email contains no property information whatsoever
+
+Respond with valid JSON only. No markdown, no explanation outside the JSON object.
+
+Example response shape:
+{
+  "category": "MAINTENANCE",
+  "urgency": "HIGH",
+  "draft_response": "Dear...",
+  "confidence_score": 95,
+  "property_hints": "Unit 9",
+  "property_match_status": "AMBIGUOUS"
+}"""
 
 
 def categorise_and_draft(subject: str, body: str, sender_name: str) -> dict:
@@ -41,7 +58,6 @@ def categorise_and_draft(subject: str, body: str, sender_name: str) -> dict:
 
     raw = message.content[0].text.strip()
 
-    # Strip markdown code fences if present
     if raw.startswith("```"):
         raw = raw.split("```")[1]
         if raw.startswith("json"):
@@ -57,6 +73,8 @@ def categorise_and_draft(subject: str, body: str, sender_name: str) -> dict:
             "urgency": "LOW",
             "draft_response": raw,
             "confidence_score": 0,
+            "property_hints": "",
+            "property_match_status": "UNMATCHED",
         }
 
     return {
@@ -64,4 +82,6 @@ def categorise_and_draft(subject: str, body: str, sender_name: str) -> dict:
         "urgency": result.get("urgency", "LOW"),
         "draft_response": result.get("draft_response", ""),
         "confidence_score": int(result.get("confidence_score", 0)),
+        "property_hints": result.get("property_hints", ""),
+        "property_match_status": result.get("property_match_status", "UNMATCHED"),
     }

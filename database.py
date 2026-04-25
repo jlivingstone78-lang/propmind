@@ -28,9 +28,22 @@ def init_db():
                 draft_response TEXT,
                 confidence_score INTEGER,
                 status TEXT DEFAULT 'PENDING',
-                processed_at TIMESTAMP
+                processed_at TIMESTAMP,
+                property_hints TEXT DEFAULT '',
+                property_match_status TEXT DEFAULT 'UNMATCHED',
+                matched_property TEXT DEFAULT ''
             )
         """)
+        # Safe migration for existing tables that predate these columns
+        for col, default in [
+            ("property_hints", "''"),
+            ("property_match_status", "'UNMATCHED'"),
+            ("matched_property", "''"),
+        ]:
+            try:
+                conn.execute(f"ALTER TABLE emails ADD COLUMN {col} TEXT DEFAULT {default}")
+            except Exception:
+                pass  # column already exists
         conn.commit()
 
 
@@ -41,11 +54,13 @@ def insert_email(record: dict) -> int:
             INSERT OR IGNORE INTO emails
                 (tenant_id, gmail_message_id, sender_name, sender_email,
                  subject, body, received_at, category, urgency,
-                 draft_response, confidence_score, status, processed_at)
+                 draft_response, confidence_score, status, processed_at,
+                 property_hints, property_match_status, matched_property)
             VALUES
                 (:tenant_id, :gmail_message_id, :sender_name, :sender_email,
                  :subject, :body, :received_at, :category, :urgency,
-                 :draft_response, :confidence_score, :status, :processed_at)
+                 :draft_response, :confidence_score, :status, :processed_at,
+                 :property_hints, :property_match_status, :matched_property)
             """,
             record,
         )
@@ -100,6 +115,16 @@ def count_emails(tenant_id: str) -> int:
             (tenant_id,),
         ).fetchone()
         return row[0]
+
+
+def match_property(email_id: int, matched_property: str) -> dict | None:
+    with get_conn() as conn:
+        conn.execute(
+            "UPDATE emails SET matched_property=?, property_match_status='MATCHED' WHERE id=?",
+            (matched_property, email_id),
+        )
+        conn.commit()
+    return get_email_by_id(email_id)
 
 
 def get_all_gmail_ids() -> list[str]:

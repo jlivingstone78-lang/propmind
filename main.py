@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import database
-from database import get_all_gmail_ids, clear_all_emails
+from database import get_all_gmail_ids, clear_all_emails, match_property
 import ai_service
 import scheduler
 from gmail_service import (
@@ -77,6 +77,9 @@ def poll_inbox():
                 "urgency": ai_result["urgency"],
                 "draft_response": ai_result["draft_response"],
                 "confidence_score": ai_result["confidence_score"],
+                "property_hints": ai_result.get("property_hints", ""),
+                "property_match_status": ai_result.get("property_match_status", "UNMATCHED"),
+                "matched_property": "",
                 "status": "PENDING",
                 "processed_at": datetime.now(timezone.utc).isoformat(),
             }
@@ -123,9 +126,9 @@ app.add_middleware(
 
 # ── Root + Health ─────────────────────────────────────────────────────────────
 
-@app.get("/")
+@app.get("/", response_class=FileResponse)
 def root():
-    return FileResponse(os.path.join(_base_dir, "index.html"))
+    return os.path.join(_base_dir, "index.html")
 
 
 @app.get("/health")
@@ -140,9 +143,13 @@ def health():
 def list_emails(
     tenant_id: str = Query(default=None),
     status: str = Query(default=None),
+    property_match_status: str = Query(default=None),
 ):
     tid = tenant_id or TENANT_ID
-    return database.get_emails(tid, status)
+    emails = database.get_emails(tid, status)
+    if property_match_status:
+        emails = [e for e in emails if e.get("property_match_status") == property_match_status]
+    return emails
 
 
 @app.get("/api/emails/{email_id}")
@@ -172,6 +179,19 @@ def assign_email(email_id: int):
 @app.post("/api/emails/{email_id}/ignore")
 def ignore_email(email_id: int):
     email = database.update_status(email_id, "IGNORED")
+    if not email:
+        raise HTTPException(status_code=404, detail="Email not found")
+    return email
+
+
+class MatchPropertyRequest(BaseModel):
+    matched_property: str
+
+
+@app.post("/api/emails/{email_id}/match-property")
+def match_property_endpoint(email_id: int, body: MatchPropertyRequest):
+    """Manually link an email to a known property address."""
+    email = match_property(email_id, body.matched_property)
     if not email:
         raise HTTPException(status_code=404, detail="Email not found")
     return email
@@ -241,6 +261,7 @@ def oauth_callback(request: Request, code: str = Query(default=None), error: str
 # ── Demo seeding ──────────────────────────────────────────────────────────────
 
 DUMMY_DATA_PATH = os.path.join(os.path.dirname(__file__), "data", "dummy_emails.json")
+DUMMY_AMBIGUOUS_PATH = os.path.join(os.path.dirname(__file__), "data", "dummy_emails_ambiguous.json")
 _SEED_HEADER = "X-PropMind-Seed"
 
 
@@ -358,15 +379,16 @@ def debug_inbox():
 
 
 @app.post("/api/seed-inbox")
-def seed_inbox():
-    """Insert all dummy tenant emails into the Gmail inbox as UNREAD. Demo use only."""
+def seed_inbox(ambiguous: bool = Query(default=False)):
+    """Insert dummy tenant emails into the Gmail inbox as UNREAD. Pass ?ambiguous=true to seed the property-ambiguous set."""
     global _gmail_service
     if _gmail_service is None:
         _gmail_service = build_service()
 
     to_address = os.environ.get("GMAIL_ADDRESS", "propmind.test@gmail.com")
+    data_path = DUMMY_AMBIGUOUS_PATH if ambiguous else DUMMY_DATA_PATH
 
-    with open(DUMMY_DATA_PATH) as f:
+    with open(data_path) as f:
         emails = json.load(f)
 
     inserted, failed = [], []

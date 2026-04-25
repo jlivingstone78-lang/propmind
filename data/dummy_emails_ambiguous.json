@@ -1,0 +1,182 @@
+[
+  {
+    "from_name": "Sam Chen",
+    "from_email": "samchen.bne@gmail.com",
+    "subject": "Hot water not working again",
+    "body": "Hi,\n\nJust letting you know the hot water is out again. This is the third time this year. I had a cold shower this morning which isn't great when it's this cold. Can someone please come and look at it? I've got a fairly flexible schedule this week if that helps.\n\nThanks,\nSam",
+    "timestamp": "2025-07-02T08:15:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "high"
+  },
+  {
+    "from_name": "Tiffany Okafor",
+    "from_email": "tiffany.okafor@outlook.com",
+    "subject": "Adding my partner to the lease",
+    "body": "Hello,\n\nMy partner has been staying with me for the past few months and we'd like to make it official and add him to the lease. His name is Michael Okafor and he works full time. Is this something we can organise? Do you need him to fill in an application form or go through a background check? Happy to do whatever's needed.\n\nKind regards,\nTiffany",
+    "timestamp": "2025-07-03T11:30:00+10:00",
+    "category": "lease",
+    "urgency": "low"
+  },
+  {
+    "from_name": "Nathan Byrne",
+    "from_email": "nate.byrne77@hotmail.com",
+    "subject": "When does rent come out this month?",
+    "body": "Hey,\n\nJust a quick one — public holiday next week and I'm not sure if my rent comes out on the actual date or the next business day. Don't want to get a late payment fee over something silly. Can you let me know how it works?\n\nCheers\nNathan",
+    "timestamp": "2025-07-04T09:45:00+10:00",
+    "category": "payment",
+    "urgency": "low"
+  },
+  {
+    "from_name": "Wendy Stafford",
+    "from_email": "wendystafford@gmail.com",
+    "subject": "Loud music from unit 14 every weekend",
+    "body": "Hi there,\n\nI'm writing to make a formal complaint about the tenant in unit 14. Every Friday and Saturday night they have extremely loud music going until 2 or 3am. I've knocked on the door twice and asked them to keep it down, which works for about an hour and then it's back. I work early starts and this is genuinely affecting my sleep and my health. I'd like this escalated please.\n\nRegards,\nWendy Stafford, Unit 12",
+    "timestamp": "2025-07-05T10:20:00+10:00",
+    "category": "complaint",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Raj Patel",
+    "from_email": "rajpatel.qld@gmail.com",
+    "subject": "Broken window latch - security concern",
+    "body": "Hello,\n\nOne of the windows in my bedroom has a broken latch and won't lock properly. I've been jamming a piece of wood in the track to keep it secure but that's obviously not a proper fix. I'm on the ground floor so I'm not comfortable leaving it like this. Can someone come and have a look? Happy to be home any weekday after 4pm.\n\nThanks,\nRaj",
+    "timestamp": "2025-07-07T14:10:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Chloe Bergmann",
+    "from_email": "chloe.bergmann@gmail.com",
+    "subject": "Upcoming inspection - timing issue",
+    "body": "Hi,\n\nI received the inspection notice for next Thursday. I'm in Newstead and I work on the north side, so getting home by 9am isn't possible for me. Is there any chance the inspection could be moved to the afternoon, say after 3pm? I can definitely be there then. Sorry for the hassle and hope it's not too much trouble to rearrange.\n\nChloe",
+    "timestamp": "2025-07-08T16:55:00+10:00",
+    "category": "inspection",
+    "urgency": "low"
+  },
+  {
+    "from_name": "Mikey Santos",
+    "from_email": "mikey.santos92@gmail.com",
+    "subject": "Front door deadbolt is stuck",
+    "body": "Hey,\n\nMy front door deadbolt is jamming — sometimes it takes like five minutes to get the key to turn. I've tried WD-40 but it keeps happening. It's getting worse and I'm worried I'm going to get locked out one night. Can you get a locksmith to take a look? Pretty urgent because I'm heading away this weekend and I want it fixed before I go.\n\nThanks\nMikey",
+    "timestamp": "2025-07-09T13:00:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "high"
+  },
+  {
+    "from_name": "Bernadette Kim",
+    "from_email": "bernadettekim@icloud.com",
+    "subject": "Lease renewal - would like to stay another 12 months",
+    "body": "Hi,\n\nMy lease comes up for renewal at the end of August and I'd like to stay for another 12 months if that's possible. I've really enjoyed living here and haven't had any issues. Could you let me know what the new rent amount would be and what the process is to renew? I'd like to get it sorted early so there's no gap.\n\nThanks,\nBernadette Kim",
+    "timestamp": "2025-07-10T10:05:00+10:00",
+    "category": "lease",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Tyler Anderson",
+    "from_email": "tyler.anderson.au@gmail.com",
+    "subject": "Mould growing behind wardrobe",
+    "body": "Hi there,\n\nI moved my wardrobe last weekend to vacuum behind it and found a pretty significant amount of black mould growing on the wall. I've wiped it down with mould spray but it keeps coming back. I think there might be a moisture issue in that corner of the room — it does feel damp. Can someone come and assess it properly? A bit concerned about the health implications.\n\nTyler Anderson",
+    "timestamp": "2025-07-11T09:30:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "high"
+  },
+  {
+    "from_name": "Sue Nakamura",
+    "from_email": "sue.nakamura@yahoo.com.au",
+    "subject": "Query about rent amount this month",
+    "body": "Hello,\n\nI noticed my rent this month was $35 higher than usual. I'm not aware of any rent increase being communicated to me — I didn't receive a notice, or if one was sent I didn't receive it. Can you please clarify what the current rent amount is supposed to be and whether a proper notice was issued? I've been in this complex for over two years and always paid on time.\n\nSue Nakamura",
+    "timestamp": "2025-07-12T14:45:00+10:00",
+    "category": "payment",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Hamish O'Brien",
+    "from_email": "hamish.obrien@gmail.com",
+    "subject": "Overgrown back garden - whose responsibility?",
+    "body": "G'day,\n\nThe back garden has gotten pretty out of control. I've been maintaining the lawn at the front but the back garden beds were already overgrown when I moved in and I wasn't sure if it was my responsibility or the landlord's. The weeds are now about knee-high. Can you clarify what's in my lease regarding garden maintenance? I'm happy to do it if that's what's expected but I wanted to check first.\n\nHamish O'Brien",
+    "timestamp": "2025-07-14T11:15:00+10:00",
+    "category": "general",
+    "urgency": "low"
+  },
+  {
+    "from_name": "Fatima Al-Rashid",
+    "from_email": "fatima.alrashid@hotmail.com",
+    "subject": "Question about having a family member stay",
+    "body": "Hello,\n\nMy mother is visiting from overseas for approximately three months. She will be staying with me during that time. I want to make sure this is okay under my lease and that I'm not breaching any conditions. She won't be contributing to rent or listed as a tenant. Could you let me know if I need to do anything formally to notify you about her stay?\n\nThank you,\nFatima Al-Rashid",
+    "timestamp": "2025-07-15T10:50:00+10:00",
+    "category": "lease",
+    "urgency": "low"
+  },
+  {
+    "from_name": "Dave Nguyen",
+    "from_email": "d.nguyen.bne@gmail.com",
+    "subject": "Dishwasher not draining properly",
+    "body": "Hey,\n\nThe dishwasher has been playing up for a couple of weeks — water is pooling at the bottom after every cycle and not draining out fully. I've cleaned the filter like YouTube told me to but it hasn't helped. I'm in Unit 9 if that helps narrow it down. Can someone book a repair? It's a bit gross leaving dishes hand washing everything in the meantime.\n\nDave",
+    "timestamp": "2025-07-16T15:20:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Amber Reyes",
+    "from_email": "amber.reyes.au@gmail.com",
+    "subject": "Moving out next month - bond refund process",
+    "body": "Hi,\n\nI'm planning to move out at the end of next month and I want to make sure I do everything right to get my full bond back. Can you send me a checklist of what I need to do before vacating? I want to book a cleaner and patch any holes from picture hooks in advance. Also do I need to be present for the final inspection or can I drop the keys off beforehand?\n\nThanks,\nAmber",
+    "timestamp": "2025-07-17T12:30:00+10:00",
+    "category": "lease",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Josh Whitfield",
+    "from_email": "jwhitfield85@gmail.com",
+    "subject": "Water coming through ceiling after last night's rain",
+    "body": "Hi,\n\nWoke up this morning to find a wet patch on my ceiling in the bedroom — there was definitely a leak coming through during last night's storm. I've put a bucket down for now but it dripped pretty steadily for a few hours. Could be the unit above me or the roof, not sure. This needs to be looked at urgently before the next lot of rain comes through. I'll be home all day today.\n\nJosh Whitfield",
+    "timestamp": "2025-07-18T07:50:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "urgent"
+  },
+  {
+    "from_name": "Irene Szabo",
+    "from_email": "irene.szabo@bigpond.com",
+    "subject": "Received rent increase notice - want to discuss",
+    "body": "Dear Property Manager,\n\nI received a rent increase notice this week advising my rent will go up by $60 per week. I've been renting here for four years and have always paid on time. I'd like to discuss this before accepting it. The increase feels significant given current conditions and I'd appreciate a conversation about whether there's any flexibility. Could we arrange a time to talk?\n\nKind regards,\nIrene Szabo",
+    "timestamp": "2025-07-19T13:10:00+10:00",
+    "category": "lease",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Marcus Brown",
+    "from_email": "marcus.brown.qld@outlook.com",
+    "subject": "Need to vacate early - job offer interstate",
+    "body": "Hi,\n\nI've just accepted a job in Melbourne and need to relocate within four weeks. I understand I'm still within my lease term and there may be break costs involved — I just want to understand what my obligations are and how much notice I need to give. I'm in Unit 5 and have been here since January. Can we talk through the options? I'd like to do this properly and not leave you in the lurch.\n\nMarcus Brown",
+    "timestamp": "2025-07-21T09:25:00+10:00",
+    "category": "lease",
+    "urgency": "high"
+  },
+  {
+    "from_name": "Zara Ahmed",
+    "from_email": "zara.ahmed.bne@gmail.com",
+    "subject": "Request to keep a small dog",
+    "body": "Hello,\n\nI was hoping to get permission to keep a small dog — she's a cavalier king charles spaniel, very well behaved and house trained. I've had her for three years and she's never caused issues in previous rentals. I understand there may be a pet bond or additional conditions involved and I'm happy to agree to those. I've been renting my two-bedroom for about 18 months now and haven't had any issues. Could you please pass this on to the owner for their consideration?\n\nThanks,\nZara Ahmed",
+    "timestamp": "2025-07-22T11:40:00+10:00",
+    "category": "general",
+    "urgency": "low"
+  },
+  {
+    "from_name": "Terry Flannigan",
+    "from_email": "terryflan@gmail.com",
+    "subject": "Smoke alarm keeps beeping",
+    "body": "Hi,\n\nOne of my smoke alarms has been beeping every 30 seconds or so — I think the battery is flat. I've had a look and it seems to be hardwired in so I can't just swap the battery myself without knowing what I'm doing. Can you send someone to sort it out? It's right outside my bedroom and it's been waking me up at night. I know it's probably a small job but it's pretty annoying.\n\nTerry Flannigan",
+    "timestamp": "2025-07-23T08:35:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Lisa Tanaka",
+    "from_email": "lisa.tanaka.bne@gmail.com",
+    "subject": "Hot water system making loud banging noises",
+    "body": "Hi there,\n\nThe hot water system at my place in Chermside has started making really loud banging and groaning noises, especially in the early morning. The hot water still works fine but the noise is a bit alarming. My neighbour reckons it might be a pressure issue or the element going. It's been happening for about a week. I'd rather get it looked at now than have it fail completely. Is there a plumber on your books who could take a look?\n\nLisa Tanaka",
+    "timestamp": "2025-07-24T16:00:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "medium"
+  }
+]
