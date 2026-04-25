@@ -401,9 +401,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
         <div class="ssub"><span class="up">↑ 18%</span> vs yesterday (120)</div>
       </div>
       <div class="scard sg">
-        <div class="slabel">AI Handled</div>
-        <div class="sval cg">87<sup>%</sup></div>
-        <div class="ssub"><span class="up">123</span> resolved autonomously</div>
+        <div class="slabel">Time Saved Today</div>
+        <div class="sval cg">3.2<sup style="font-size:13px">hrs</sup></div>
+        <div class="ssub"><span class="up">↑ 12%</span> vs yesterday</div>
       </div>
       <div class="scard sp">
         <div class="slabel">Avg Response Time</div>
@@ -467,13 +467,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
         <div class="cwrap line"><canvas id="volChart"></canvas></div>
       </div>
       <div class="ccard">
-        <div class="ctitle">AI vs Human</div>
-        <div class="csub">Resolution method today</div>
-        <div class="cwrap donut"><canvas id="ratioChart"></canvas></div>
-        <div class="cleg" style="margin-top:14px">
-          <div class="crow"><div class="cdot" style="background:#3b82f6"></div><div class="clbl">AI Resolved</div><div class="cval">87%</div></div>
-          <div class="crow"><div class="cdot" style="background:#f59e0b"></div><div class="clbl">Human Required</div><div class="cval">13%</div></div>
-        </div>
+        <div class="ctitle">Time Saved This Week (minutes)</div>
+        <div class="csub">AI time savings vs manual handling — last 7 days</div>
+        <div class="cwrap" style="position:relative"><canvas id="timeSavedChart" style="max-height:215px"></canvas></div>
       </div>
     </div>
 
@@ -1117,23 +1113,55 @@ new Chart(document.getElementById('volChart'), {
   }
 });
 
-// AI vs Human doughnut
-new Chart(document.getElementById('ratioChart'), {
-  type: 'doughnut',
+// Time Saved This Week bar chart
+new Chart(document.getElementById('timeSavedChart'), {
+  type: 'bar',
   data: {
-    labels: ['AI Resolved','Human Required'],
+    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
     datasets: [{
-      data: [87,13],
-      backgroundColor: ['rgba(59,130,246,.85)','rgba(245,158,11,.85)'],
-      borderColor: ['#3b82f6','#f59e0b'],
-      borderWidth: 2, hoverOffset: 6,
+      label: 'Minutes Saved',
+      data: [45, 62, 58, 71, 83, 67, 90],
+      backgroundColor: [
+        'rgba(59,130,246,.7)',
+        'rgba(59,130,246,.7)',
+        'rgba(59,130,246,.7)',
+        'rgba(59,130,246,.7)',
+        'rgba(139,92,246,.8)',
+        'rgba(59,130,246,.7)',
+        'rgba(16,185,129,.85)',
+      ],
+      borderColor: [
+        '#3b82f6','#3b82f6','#3b82f6','#3b82f6','#8b5cf6','#3b82f6','#10b981',
+      ],
+      borderWidth: 2,
+      borderRadius: 6,
+      borderSkipped: false,
+      hoverBackgroundColor: 'rgba(96,165,250,.9)',
     }]
   },
   options: {
-    cutout: '72%',
-    plugins: { legend: { display: false },
-      tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw}%` } } },
-    animation: { animateRotate: true, duration: 1000, delay: 400 }
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.raw} min saved`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(30,45,69,.7)' },
+        ticks: { color: '#94a3b8' }
+      },
+      y: {
+        grid: { color: 'rgba(30,45,69,.7)' },
+        ticks: { color: '#94a3b8', callback: v => v + 'm' },
+        beginAtZero: true,
+        suggestedMax: 100,
+      }
+    },
+    animation: { duration: 900, easing: 'easeOutQuart' }
   }
 });
 </script>
