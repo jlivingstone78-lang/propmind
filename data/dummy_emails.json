@@ -1,0 +1,182 @@
+[
+  {
+    "from_name": "Darren Kowalski",
+    "from_email": "darren.kowalski82@gmail.com",
+    "subject": "URGENT - pipe burst in kitchen water everywhere",
+    "body": "Hi, its Darren from unit 4 at 22 Settlers Cres, Boondall. Theres water absolutely everywhere, a pipe under the kitchen sink has burst and its flooding through to the hallway carpet. I've turned off the water at the mains but I don't know if thats the right thing to do. I need someone here NOW, I have no idea what to do and the waters still dripping from inside the cabinet. Please call me straight away on 0412 883 441, I cannot wait for an email response this is a proper emergency.",
+    "timestamp": "2025-06-16T07:22:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "urgent"
+  },
+  {
+    "from_name": "Priya Nambiar",
+    "from_email": "priya.nambiar@hotmail.com",
+    "subject": "Oven still not fixed - this is getting ridiculous",
+    "body": "Hi there,\n\nI'm writing again about the oven at my unit, 7/14 Robertson St, Fortitude Valley. I first reported this on the 2nd of June and it is now two weeks later and nothing has happened. I got one email saying a tradesperson would be in touch and that was it, complete silence since then.\n\nI have a family. I have two kids. I cannot keep ordering takeaway every night because the oven doesn't work — it's expensive and it's not fair. This is a basic appliance and I pay $2,350 a month in rent. I would really appreciate someone actually following up on this and giving me a confirmed date for the repair, not just another promise that someone will call me.",
+    "timestamp": "2025-06-14T11:08:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "high"
+  },
+  {
+    "from_name": "Beau Trindall",
+    "from_email": "beautrindall@outlook.com.au",
+    "subject": "Bathroom fan broken - mould starting to appear",
+    "body": "Hey,\n\nJust wanted to flag that the exhaust fan in the bathroom at my place (2/88 Vulture St, West End) has stopped working. It's been about 10 days now and I've noticed some dark spotting starting around the window frame and on the ceiling near the shower. I've been leaving the window open when I can but it's been raining a lot lately so that doesn't really help.\n\nNot trying to make a big deal of it, just want to get it sorted before the mould gets worse. Can you organise someone to take a look? Anytime during the week works for me as I work from home. Cheers.",
+    "timestamp": "2025-06-10T14:33:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Colleen Merritt",
+    "from_email": "colleenmerritt55@bigpond.com",
+    "subject": "Dripping tap in the garden",
+    "body": "Hello, hope you're well. Just a quick one — the garden tap on the side of the house at 31 Jacaranda Ave, Aspley has been dripping for a few weeks. It's not a flood or anything dramatic, just a constant slow drip. I thought it might stop on its own but it hasn't. Wouldn't mind getting it looked at when someone's in the area — no rush at all, just don't want to waste water forever. Thanks very much.",
+    "timestamp": "2025-06-09T09:55:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "low"
+  },
+  {
+    "from_name": "Marcus Nguyen",
+    "from_email": "marcus.nguyen91@gmail.com",
+    "subject": "Front door lock - really hard to open",
+    "body": "Hi,\n\nI wanted to report an issue with the front door lock at my apartment, 11/3 Browning St, West End. For the last couple of weeks it's been getting progressively harder to unlock — I have to jiggle the key a fair bit and sometimes it takes me a minute or two just to get inside. It happened again last night when I had groceries in both hands and it was raining, pretty frustrating.\n\nMy main concern is that if the lock seizes completely I'll be locked out, or if there's an emergency I need to be able to get out quickly. Could someone come and have a look at it and either rekey it or replace the barrel? Let me know what you need from my end. Thanks.",
+    "timestamp": "2025-06-06T16:47:00+10:00",
+    "category": "maintenance_request",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Sophie Papadimitriou",
+    "from_email": "sophiepapa@icloud.com",
+    "subject": "Lease coming up - just wanted to check in",
+    "body": "Hi! Hope you're having a good week. I just wanted to reach out because my lease at 5/22 Tedder Ave, Main Beach is up at the end of September and I wanted to start thinking about what's next. I'm definitely interested in staying — I really love the apartment and the location — I just wanted to know what the process looks like from your end and whether the rent is likely to change at renewal time.\n\nNo huge rush obviously, just like to be organised. Feel free to shoot me an email or give me a call whenever suits. Thanks so much!",
+    "timestamp": "2025-06-03T10:20:00+10:00",
+    "category": "lease_renewal",
+    "urgency": "low"
+  },
+  {
+    "from_name": "Tony Ferraro",
+    "from_email": "tferraro_77@hotmail.com",
+    "subject": "Lease renewal - prefer to go month to month if possible",
+    "body": "Hi,\n\nMy lease at 14 Glenora St, Wynnum is due to expire on the 31st of July. I got the renewal documents last week but I wasn't sure if I had to sign a new fixed term or whether I could just roll onto a periodic lease. My situation at work is a bit uncertain at the moment and I don't really want to lock myself in for another 12 months if I don't have to.\n\nI'm not planning to leave or anything, I just want a bit of flexibility for the next few months. Is that something you can organise? Happy to chat about it if needed. Cheers, Tony.",
+    "timestamp": "2025-05-29T13:11:00+10:00",
+    "category": "lease_renewal",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Jade Hocking",
+    "from_email": "jade.hocking@gmail.com",
+    "subject": "Not renewing lease - vacating at end of term",
+    "body": "Hi,\n\nI'm writing to let you know that I will not be renewing my lease at 9/40 Boundary St, Spring Hill and will be vacating at the end of my tenancy on the 30th of June. I understand this doesn't leave a huge amount of notice and I'm sorry about that. Things have changed pretty quickly for me personally and I need to relocate interstate for family reasons.\n\nCould you please let me know what I need to do to start the vacating process — I want to make sure I leave the property in good condition and get my bond back promptly. I'll be available for a final inspection anytime in the last week of June. Please let me know the next steps as soon as possible. Thanks, Jade.",
+    "timestamp": "2025-06-13T08:55:00+10:00",
+    "category": "lease_renewal",
+    "urgency": "urgent"
+  },
+  {
+    "from_name": "Liam Burrows",
+    "from_email": "liamburrows94@gmail.com",
+    "subject": "Rent this week - going to be a couple of days late, sorry",
+    "body": "Hey, just wanted to give you a heads up before it happens rather than after — my rent for this week is going to be a few days late. I get paid Thursday and there was an unexpected bill come out of my account that's left me short until then. I'll transfer the full amount on Thursday the 19th, I just didn't want it to sit there looking like I'd forgotten.\n\nSorry about this, it doesn't usually happen and I appreciate your patience. Let me know if that's an issue.",
+    "timestamp": "2025-06-16T19:32:00+10:00",
+    "category": "rent_payment_issue",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Alysha Drummond",
+    "from_email": "alysha.drummond@outlook.com",
+    "subject": "Dispute over rent arrears amount - need clarification",
+    "body": "Hi,\n\nI received a notice saying I'm three weeks behind in rent at my property, 3/19 Vulture St, South Brisbane. I want to be very clear that I dispute this amount. According to my own bank records I made a payment of $1,780 on the 23rd of May which I believe has not been applied to my account correctly.\n\nI have the bank transaction reference and a screenshot of the transfer. I am not refusing to pay what I owe, but I'm not going to pay an inflated arrears figure without this being sorted out first. I'd like someone to review my payment history properly and confirm the correct amount outstanding. I'm available to discuss this but I would like a written response first. Please treat this as a formal request for clarification.",
+    "timestamp": "2025-06-11T10:04:00+10:00",
+    "category": "rent_payment_issue",
+    "urgency": "high"
+  },
+  {
+    "from_name": "Dean Pearce",
+    "from_email": "deanpearce1979@bigpond.com",
+    "subject": "Please I need help - lost my job last month",
+    "body": "I really don't know who else to contact. I lost my job at the end of May — I was working in logistics and the company went under. I've applied for Centrelink but as you probably know it takes weeks to come through and I've got nothing coming in right now.\n\nI'm at 24 Cootharaba Rd, Noosaville and I've been a tenant there for nearly three years without a single issue. I've never been late once. I'm not asking to not pay rent, I'm asking if there's any possibility of a temporary reduction or a payment plan while I get back on my feet. I have two kids and I'm genuinely scared. I know you have to follow a process and I respect that, I just need someone to work with me here. Please. I'll take any part-time work I can get in the meantime. Is there anything that can be done?",
+    "timestamp": "2025-06-15T20:11:00+10:00",
+    "category": "rent_payment_issue",
+    "urgency": "urgent"
+  },
+  {
+    "from_name": "Natasha Georgiev",
+    "from_email": "tash.georgiev@gmail.com",
+    "subject": "Noise complaint - dog next door barking all day",
+    "body": "Hi there,\n\nI'm hoping you can help with an ongoing issue at my complex, 12/55 Marine Pde, Coolangatta. The tenants in unit 11 have a large dog that barks continuously throughout the day — we're talking from about 7am until well into the evening. I work from home and it has become genuinely difficult to concentrate, and I've had to move into my bedroom with headphones just to get through calls.\n\nI did knock on their door a few weeks ago and the guy was pretty dismissive about it. I don't want to escalate things between us as neighbours but it's been going on for months now. Is this something you can raise with them directly? I'd prefer to remain anonymous if possible. Thanks.",
+    "timestamp": "2025-06-07T15:22:00+10:00",
+    "category": "tenant_complaint",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Yusuf Al-Amin",
+    "from_email": "yusuf.alamin@icloud.com",
+    "subject": "Water leaking through my ceiling from upstairs bathroom",
+    "body": "Hi,\n\nThis is becoming a serious issue and I need it dealt with urgently. There is water consistently leaking through the ceiling of my bathroom and into the light fitting at 4/67 Astor Tce, Spring Hill. This has been happening on and off for two months but it happened again last night and it was significant — water dripping out of the light fixture, which I'm sure you'd agree is a major safety hazard.\n\nThe unit above me is unit 5. I don't know if they have a leaking shower tray or an overflowing bath or what, but something up there is not right. I turned off my bathroom light and I am not using it until this is resolved. I need an electrician and a plumber organised immediately. I have photos and videos of last night's incident if required. Please call me on 0438 221 093. This is not acceptable.",
+    "timestamp": "2025-06-12T08:03:00+10:00",
+    "category": "tenant_complaint",
+    "urgency": "high"
+  },
+  {
+    "from_name": "Rebecca Tran",
+    "from_email": "rebecca.tran.bne@gmail.com",
+    "subject": "Formal complaint - black mould, my daughter has been unwell",
+    "body": "To whom it may concern,\n\nI am writing to formally notify you of a serious and ongoing health hazard at the property I rent at 2/18 Gladstone Rd, Highgate Hill. For approximately four months I have reported the presence of black mould in the main bedroom and the bathroom. Despite multiple emails and one phone call, I have received no adequate response and no remediation has been carried out.\n\nMy seven-year-old daughter has been experiencing persistent respiratory symptoms including coughing, wheezing, and two ear infections since January. Her GP has documented these conditions and has stated in writing that mould exposure in the home environment may be a contributing factor.\n\nI have taken legal advice and I am writing to advise you that if this matter is not resolved — meaning a qualified mould remediation professional attending the property and providing a written report and remediation plan — within seven days of this email, I will be lodging a formal complaint with the Residential Tenancies Authority and seeking legal action for breach of the lessor's obligations under the Residential Tenancies and Rooming Accommodation Act 2008.\n\nI have photographs, a log of all prior communications, and a letter from my daughter's GP. I am not making idle threats. I want this resolved. Please respond in writing only from this point forward.",
+    "timestamp": "2025-06-17T09:44:00+10:00",
+    "category": "tenant_complaint",
+    "urgency": "urgent"
+  },
+  {
+    "from_name": "Finn O'Sullivan",
+    "from_email": "finn.osullivan@hotmail.com",
+    "subject": "Routine inspection - can we move the time?",
+    "body": "Hey there, I just got the notice for the routine inspection at 6/2 Browning St, Dutton Park scheduled for the 24th of June at 10am. That day actually doesn't work too well for me — I have a medical appointment in the morning that I can't reschedule. Would it be possible to move it to the afternoon of the same day, or maybe a different day that week? I'm easy either way, just the 10am slot is the one time I can't do. Thanks heaps.",
+    "timestamp": "2025-06-08T12:37:00+10:00",
+    "category": "inspection_query",
+    "urgency": "low"
+  },
+  {
+    "from_name": "Mei-Ling Chow",
+    "from_email": "meilingchow88@gmail.com",
+    "subject": "24 hours notice for inspection is not enough",
+    "body": "Hello,\n\nI received a text message yesterday afternoon saying there will be an inspection at my property tomorrow morning — 10 Regent St, Woolloongabba, unit 3. I only received this message at 4:30pm which gives me less than 18 hours notice. I understand that inspections are part of renting but I work full time and I need adequate notice to make sure I'm home or at least to prepare the property.\n\nI looked it up and the legal requirement is a minimum of 24 hours written notice, and receiving a text at 4:30pm for a 9am inspection the next day is not compliant with that. I would like either the inspection to be rescheduled with proper notice, or at minimum an acknowledgement that this was handled incorrectly. I'm happy to have the inspection — I just need it to be organised properly. Thank you.",
+    "timestamp": "2025-05-21T17:01:00+10:00",
+    "category": "inspection_query",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Angus McLeod",
+    "from_email": "angusmcleod_qld@outlook.com",
+    "subject": "Parking spot question",
+    "body": "Hi! Hope all is well. Quick question — I recently moved into 15/88 Montague Rd, West End and the lease mentions I have one allocated parking space but I'm not 100% sure which one is mine. There are numbers painted on the ground but my lease just says 'one car space' without specifying a number. Is there somewhere I can check? I don't want to accidentally park in someone else's spot. Thanks so much.",
+    "timestamp": "2025-05-14T11:26:00+10:00",
+    "category": "general_enquiry",
+    "urgency": "low"
+  },
+  {
+    "from_name": "Kylie Mundine",
+    "from_email": "kylie.mundine@gmail.com",
+    "subject": "Hanging a few pictures - do I need permission?",
+    "body": "Hi there, hope you're having a good week. Just a quick question — I've been at 8 Taringa Pocket Rd, Taringa for about six months now and I'd love to hang a few framed photos and maybe a small shelf in the living room. Nothing major, just a few hooks and nails. Do I need written permission from you to do that, or is it fine as long as I fill the holes before I move out? I've rented before and every agency seems to have a different rule so I just wanted to check rather than assume. Thanks!",
+    "timestamp": "2025-05-08T14:52:00+10:00",
+    "category": "general_enquiry",
+    "urgency": "low"
+  },
+  {
+    "from_name": "James Karavokyros",
+    "from_email": "jimmyk_1984@icloud.com",
+    "subject": "Would like to get a cat - permission request",
+    "body": "Hi,\n\nI hope this is ok to ask via email. I've been living at 21/5 Enderley Ave, Surfers Paradise for about 14 months and I'm thinking of adopting a cat from the RSPCA. I know the lease says no pets without written consent from the owner so I wanted to ask formally.\n\nIt would be a desexed female, indoor only. I'm a pretty quiet tenant and I keep the place in good condition as you'd know from the inspections. I'm more than happy to sign a pet agreement and I understand there might be additional cleaning requirements at the end of the tenancy. Could you please put the request to the owner and let me know their decision? I'd really appreciate it. Thanks very much.",
+    "timestamp": "2025-05-19T09:16:00+10:00",
+    "category": "general_enquiry",
+    "urgency": "medium"
+  },
+  {
+    "from_name": "Stacey Williamson",
+    "from_email": "staceyw_sydney@gmail.com",
+    "subject": "Breaking lease early - need to understand my options",
+    "body": "Hi,\n\nThis is a difficult email to write but I need to ask about breaking my lease early at 12 Glebe Point Rd, Glebe. My partner and I have recently separated and the situation at home has become untenable. We are both listed on the lease and neither of us is in a position to take on the full rent alone.\n\nI don't have a clear timeline yet because things are still very raw, but I want to understand what the process looks like so I can start planning. I know there are costs involved and I'm not trying to walk away from my responsibilities — I just need to know what the break lease fees would be at this stage of the tenancy, whether the owner would consider an early release if we found replacement tenants, and how long the process typically takes.\n\nI'd really appreciate a call or a meeting to talk through the options when you have time. I'm trying to keep things as civil as possible given the circumstances. Thanks for your understanding.",
+    "timestamp": "2025-05-03T16:38:00+10:00",
+    "category": "general_enquiry",
+    "urgency": "high"
+  }
+]
