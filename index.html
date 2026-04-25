@@ -1,738 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PropMail AI — Outlook</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#f3f3f3;height:100vh;display:flex;flex-direction:column;overflow:hidden;font-size:13px;color:#1f1f1f}
-.topbar{background:#0078d4;height:48px;display:flex;align-items:center;padding:0 16px;flex-shrink:0;gap:10px}
-.topbar-logo{color:white;font-size:17px;font-weight:600;letter-spacing:-.3px}
-.propmail-badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:white;font-size:11px;padding:3px 10px;border-radius:12px;display:flex;align-items:center;gap:4px;white-space:nowrap}
-.topbar-search{flex:1;max-width:380px;margin:0 12px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:4px;height:32px;padding:0 12px;color:white;font-size:13px;outline:none}
-.topbar-search::placeholder{color:rgba(255,255,255,.65)}
-.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.topbar-icon{color:white;font-size:17px;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:4px;opacity:.9}
-.topbar-icon:hover{background:rgba(255,255,255,.15)}
-.user-avatar-top{width:32px;height:32px;border-radius:50%;background:#c7e0f4;color:#0078d4;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0}
-.ai-banner{background:linear-gradient(135deg,#005a9e 0%,#004e8c 100%);color:white;padding:7px 20px;display:flex;align-items:center;gap:10px;font-size:12px;flex-shrink:0;border-bottom:1px solid #003f7a}
-.pulse-dot{width:8px;height:8px;background:#4ecca3;border-radius:50%;flex-shrink:0;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
-.ai-banner-text{font-weight:600}
-.ai-banner-stats{display:flex;gap:0;margin-left:4px;opacity:.92}
-.ai-stat{margin-left:12px}
-.ai-banner-time{margin-left:auto;font-size:11px;opacity:.65}
-.main-layout{display:flex;flex:1;overflow:hidden}
-.left-nav{width:210px;background:#f3f3f3;flex-shrink:0;overflow-y:auto;border-right:1px solid #ddd;padding:6px 0}
-.nav-section{padding:14px 16px 4px;font-size:10.5px;font-weight:700;color:#616161;text-transform:uppercase;letter-spacing:.6px}
-.nav-item{display:flex;align-items:center;padding:7px 16px;cursor:pointer;gap:9px;color:#1f1f1f;user-select:none}
-.nav-item:hover{background:#e5e5e5}
-.nav-item.active{background:#dce6f7;color:#0078d4;font-weight:600}
-.nav-icon{font-size:13px;width:16px;text-align:center;flex-shrink:0}
-.nav-label{flex:1;font-size:13px}
-.nav-badge{color:white;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;min-width:18px;text-align:center}
-.nb-blue{background:#0078d4}
-.nb-red{background:#d13438}
-.nb-amber{background:#ca8a04}
-.nb-green{background:#059669}
-.nb-purple{background:#7c3aed}
-.nav-divider{height:1px;background:#e0e0e0;margin:8px 10px}
-.propmail-nav-row{padding:10px 16px 4px;display:flex;align-items:center;gap:6px}
-.propmail-nav-label{font-size:10.5px;font-weight:700;color:#0078d4;text-transform:uppercase;letter-spacing:.6px}
-.email-list{width:300px;flex-shrink:0;background:white;border-right:1px solid #ddd;overflow-y:auto;display:flex;flex-direction:column}
-.el-header{padding:11px 14px;border-bottom:1px solid #ebebeb;display:flex;align-items:center;justify-content:space-between;background:white;position:sticky;top:0;z-index:5}
-.el-title{font-size:15px;font-weight:600}
-.el-count{font-size:12px;color:#767676}
-.email-item{padding:11px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .12s;position:relative;border-left:3px solid transparent}
-.email-item:hover{background:#f8f8f8}
-.email-item.selected{background:#dce6f7;border-left-color:#0078d4}
-.email-sender-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:3px}
-.email-sender{font-weight:700;font-size:13px}
-.email-time{font-size:11px;color:#767676;flex-shrink:0}
-.email-subject{font-size:12px;color:#333;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
-.email-tags{display:flex;gap:4px;flex-wrap:wrap}
-.tag{font-size:10px;font-weight:600;padding:2px 6px;border-radius:3px;letter-spacing:.2px;white-space:nowrap}
-.tag-maintenance{background:#fef3c7;color:#92400e}
-.tag-lease{background:#d1fae5;color:#065f46}
-.tag-payment{background:#dbeafe;color:#1e40af}
-.tag-complaint{background:#fee2e2;color:#991b1b}
-.tag-inquiry{background:#ede9fe;color:#5b21b6}
-.tag-draft{background:#dbeafe;color:#1e40af}
-.tag-review{background:#fee2e2;color:#991b1b}
-.reading-pane{flex:1;background:white;overflow-y:auto;display:flex;flex-direction:column;min-width:0}
-.rp-toolbar{display:flex;align-items:center;padding:8px 20px;border-bottom:1px solid #e8e8e8;gap:4px;background:white;position:sticky;top:0;z-index:5;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border:1px solid #d0d0d0;border-radius:4px;background:white;cursor:pointer;font-size:12px;color:#1f1f1f;font-family:inherit;transition:all .12s;white-space:nowrap}
-.btn:hover{background:#f2f2f2;border-color:#bbb}
-.btn-primary{background:#0078d4;color:white;border-color:#0078d4;font-weight:600}
-.btn-primary:hover{background:#106ebe;border-color:#106ebe}
-.btn-warn{color:#d13438;border-color:#d13438}
-.btn-warn:hover{background:#fff5f5}
-.tb-sep{width:1px;height:22px;background:#e0e0e0;margin:0 4px;flex-shrink:0}
-.rp-body{padding:24px 32px;flex:1}
-.flag-banner{background:#fff0f0;border:1px solid #fecaca;border-radius:6px;padding:10px 16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:10px;color:#991b1b;font-size:12.5px;line-height:1.5}
-.flag-banner-icon{font-size:16px;flex-shrink:0;margin-top:1px}
-.email-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #f0f0f0}
-.sender-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:white;flex-shrink:0}
-.av-maintenance{background:#d97706}
-.av-lease{background:#059669}
-.av-payment{background:#2563eb}
-.av-complaint{background:#dc2626}
-.av-inquiry{background:#7c3aed}
-.email-meta{flex:1;min-width:0}
-.email-from-name{font-weight:700;font-size:16px;margin-bottom:2px}
-.email-to-line{font-size:12px;color:#767676;margin-bottom:3px}
-.email-subject-line{font-size:14px;font-weight:600;margin-bottom:3px;color:#111}
-.email-date-line{font-size:11px;color:#a0a0a0}
-.ai-analysis-box{background:linear-gradient(135deg,#f0f7ff,#e8f3ff);border:1px solid #b8d8f8;border-radius:8px;padding:16px;margin-bottom:22px}
-.ai-box-header{display:flex;align-items:center;gap:7px;margin-bottom:12px}
-.ai-box-title{font-size:13px;font-weight:700;color:#0063b1}
-.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px}
-.ai-field-label{font-size:10px;font-weight:700;color:#767676;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
-.ai-field-value{font-size:13px;color:#1f1f1f;font-weight:500}
-.ai-field-wide{grid-column:1/-1}
-.conf-row{display:flex;align-items:center;gap:8px}
-.conf-track{flex:1;height:5px;background:#c0daf7;border-radius:3px;overflow:hidden}
-.conf-fill{height:100%;background:#0078d4;border-radius:3px;transition:width .6s ease}
-.conf-num{font-size:13px;font-weight:600;color:#0063b1}
-.priority-urgent{color:#dc2626;font-weight:700}
-.priority-high{color:#d97706;font-weight:600}
-.priority-normal{color:#059669;font-weight:500}
-.priority-low{color:#767676}
-.review-val{font-size:12px;line-height:1.5}
-.review-val.ok{color:#059669}
-.review-val.warn{color:#dc2626}
-.email-body-text{font-size:14px;line-height:1.75;color:#2a2a2a;margin-bottom:26px;white-space:pre-line}
-.draft-box{border:1px solid #b8d8f8;border-radius:8px;overflow:hidden;margin-bottom:20px}
-.draft-header{background:linear-gradient(135deg,#0078d4,#005a9e);color:white;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
-.draft-header-title{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
-.draft-header-btns{display:flex;gap:6px}
-.btn-ghost{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:white;padding:4px 11px;border-radius:4px;font-size:11.5px;cursor:pointer;font-family:inherit;transition:all .12s}
-.btn-ghost:hover{background:rgba(255,255,255,.3)}
-.btn-send-white{background:white;color:#0078d4;border:1px solid white;padding:4px 13px;border-radius:4px;font-size:11.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .12s}
-.btn-send-white:hover{background:#e8f3ff}
-.draft-content-area{padding:16px;background:#fafcff}
-.draft-editable{outline:none;min-height:120px;font-size:13px;line-height:1.75;color:#2a2a2a;white-space:pre-wrap;word-break:break-word;font-family:inherit;border-radius:4px;padding:4px;transition:background .15s;cursor:text}
-.draft-editable:focus{background:#f0f7ff}
-.draft-footer-note{padding:8px 16px 12px;font-size:11px;color:#9a9a9a;display:flex;align-items:flex-start;gap:5px;line-height:1.5}
-@keyframes shimmer{0%,100%{opacity:1}50%{opacity:.25}}
-.shimmer .draft-editable{animation:shimmer .7s ease-in-out infinite;pointer-events:none}
-@keyframes fadeSlide{to{opacity:0;max-height:0;padding-top:0;padding-bottom:0;overflow:hidden;border-bottom-width:0}}
-.email-item.removing{animation:fadeSlide .45s ease forwards}
-.no-email{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#b0b0b0;gap:14px}
-.no-email-icon{font-size:52px;opacity:.35}
-.no-email-txt{font-size:14px}
-.toast{position:fixed;bottom:24px;right:24px;background:#107c10;color:white;padding:11px 20px;border-radius:6px;font-size:13px;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,.22);z-index:9999;opacity:0;transform:translateY(8px);transition:all .25s ease;pointer-events:none;display:flex;align-items:center;gap:8px}
-.toast.show{opacity:1;transform:translateY(0)}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:#c5c5c5;border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:#a0a0a0}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropMind - AI Property Intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        @media (max-width: 600px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .feature-card {
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.1);
+        }
+        
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .feature-card p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .demo-section {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .demo-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .result-box {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .result-box.active {
+            display: block;
+        }
+        
+        .result-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .result-box p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            background: #f0f0f0;
+            padding: 20px 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-
-<div class="topbar">
-  <span class="topbar-logo">Outlook</span>
-  <span class="propmail-badge">✦ PropMail AI</span>
-  <input class="topbar-search" type="text" placeholder="Search mail and people">
-  <div class="topbar-right">
-    <div class="topbar-icon" title="Settings">⚙</div>
-    <div class="topbar-icon" title="Help">?</div>
-    <div class="topbar-icon" title="Notifications">🔔</div>
-    <div class="user-avatar-top" title="Sarah Mitchell — Apex Property Group">SM</div>
-  </div>
-</div>
-
-<div class="ai-banner">
-  <div class="pulse-dot"></div>
-  <span class="ai-banner-text">PropMail AI active</span>
-  <div class="ai-banner-stats">
-    <span class="ai-stat">· <strong>6</strong> emails processed today</span>
-    <span class="ai-stat">· <strong>4</strong> drafts ready</span>
-    <span class="ai-stat">· <strong>2</strong> flagged for your review</span>
-  </div>
-  <span class="ai-banner-time">Last synced: 9:47 AM</span>
-</div>
-
-<div class="main-layout">
-
-  <div class="left-nav">
-    <div class="nav-item active" onclick="setNavActive(this)">
-      <span class="nav-icon">📥</span>
-      <span class="nav-label">Inbox</span>
-      <span class="nav-badge nb-blue" id="inboxBadge">6</span>
-    </div>
-    <div class="nav-item" onclick="setNavActive(this)">
-      <span class="nav-icon">🚩</span>
-      <span class="nav-label">Flagged</span>
-      <span class="nav-badge nb-red">2</span>
-    </div>
-    <div class="nav-item" onclick="setNavActive(this)">
-      <span class="nav-icon">📤</span>
-      <span class="nav-label">Sent Items</span>
-    </div>
-    <div class="nav-item" onclick="setNavActive(this)">
-      <span class="nav-icon">📝</span>
-      <span class="nav-label">Drafts</span>
-      <span class="nav-badge nb-blue">4</span>
-    </div>
-    <div class="nav-item" onclick="setNavActive(this)">
-      <span class="nav-icon">🗑</span>
-      <span class="nav-label">Deleted Items</span>
-    </div>
-    <div class="nav-item" onclick="setNavActive(this)">
-      <span class="nav-icon">📁</span>
-      <span class="nav-label">Archive</span>
-    </div>
-    <div class="nav-divider"></div>
-    <div class="propmail-nav-row">
-      <span style="font-size:13px;color:#0078d4">✦</span>
-      <span class="propmail-nav-label">PropMail AI</span>
-    </div>
-    <div class="nav-item" onclick="setNavActive(this)">
-      <span class="nav-icon">🔧</span>
-      <span class="nav-label">Maintenance</span>
-      <span class="nav-badge nb-amber">2</span>
-    </div>
-    <div class="nav-item" onclick="setNavActive(this)">
-      <span class="nav-icon">📋</span>
-      <span class="nav-label">Lease</span>
-      <span class="nav-badge nb-green">1</span>
-    </div>
-    <div class="nav-item" onclick="setNavActive(this)">
-      <span class="nav-icon">💳</span>
-      <span class="nav-label">Payment</span>
-      <span class="nav-badge nb-blue">1</span>
-    </div>
-    <div class="nav-item" onclick="setNavActive(this)">
-      <span class="nav-icon">⚠️</span>
-      <span class="nav-label">Complaints</span>
-      <span class="nav-badge nb-red">1</span>
-    </div>
-    <div class="nav-item" onclick="setNavActive(this)">
-      <span class="nav-icon">🔍</span>
-      <span class="nav-label">Inquiries</span>
-      <span class="nav-badge nb-purple">1</span>
-    </div>
-  </div>
-
-  <div class="email-list">
-    <div class="el-header">
-      <span class="el-title">Inbox</span>
-      <span class="el-count" id="emailCount">6 messages</span>
-    </div>
-    <div id="emailListContainer"></div>
-  </div>
-
-  <div class="reading-pane" id="readingPane">
-    <div class="no-email">
-      <div class="no-email-icon">✦</div>
-      <div class="no-email-txt">Select an email to view</div>
-    </div>
-  </div>
-
-</div>
-
-<div class="toast" id="toast">
-  <span>✓</span><span id="toastMsg"></span>
-</div>
-
-<script>
-const EMAILS = [
-  {
-    id: 1,
-    from: 'Tom Nguyen',
-    email: 'tom.nguyen@gmail.com',
-    initials: 'TN',
-    time: '9:14 AM',
-    subject: 'URGENT: Water leak coming through my ceiling',
-    category: 'maintenance',
-    aiStatus: 'review',
-    property: 'Unit 3B, 42 Crown Street, Darlinghurst NSW 2010',
-    confidence: 97,
-    priority: 'Urgent',
-    flagNote: 'Third maintenance escalation this month. Possible recurring plumbing issue — trade inspection and formal building audit recommended.',
-    body: `Hi Sarah,
-
-I'm really concerned — there's water coming through the ceiling of my bathroom from the unit above me. It started about 20 minutes ago and it's getting worse. There's already a wet patch about half a metre across and it's dripping steadily onto the floor.
-
-I've put towels down but I'm worried about water getting into the electrical fittings. The bathroom light is flickering which is really worrying me.
-
-Can you please send someone urgently? I've knocked on the door of the unit above but there's no answer.
-
-This is the third issue in the past six weeks — first the hot water system, then a blocked drain, and now this. I'm starting to really question whether this building is being maintained properly.
-
-Please call me on 0412 338 492 as soon as possible.
-
-Thanks,
-Tom Nguyen
-Unit 3B`,
-    draft: `Dear Tom,
-
-Thank you for contacting us immediately — this is exactly the right thing to do and I am treating this as an urgent matter.
-
-I have logged this as an emergency maintenance issue and have already contacted our licensed plumber, Reliable Plumbing Services. They will attend the property today and you will receive a call from them within the next 30 minutes to confirm arrival.
-
-Given the concern about electrical fittings near water, I strongly recommend you switch off the bathroom light circuit at your switchboard as a precaution. Please do not use any electrical fittings in the affected area until the plumber has assessed the situation.
-
-I have also attempted to contact the tenant in the unit above. If they cannot be reached, we hold emergency access authority and will arrange entry accordingly.
-
-I understand your frustration with recurring issues and I want to assure you I will be arranging a full building inspection once this immediate matter is resolved. Your safety and comfort are our priority.
-
-I will keep you updated throughout the day. Please call me directly on (07) 3210 5500 if the situation worsens before the plumber arrives.
-
-Kind regards,
-Sarah Mitchell
-Senior Property Manager | Apex Property Group
-P: (07) 3210 5500 | E: sarah.mitchell@apexproperty.com.au`
-  },
-  {
-    id: 2,
-    from: 'Priya Sharma',
-    email: 'priya.sharma@outlook.com',
-    initials: 'PS',
-    time: '8:52 AM',
-    subject: 'Questions about our lease renewal — Unit 12',
-    category: 'lease',
-    aiStatus: 'draft',
-    property: 'Unit 12, 88 Boundary Road, Spring Hill QLD 4000',
-    confidence: 94,
-    priority: 'Normal',
-    flagNote: null,
-    body: `Hi Sarah,
-
-Our lease for Unit 12 is up for renewal in about six weeks and I have a few questions before we decide whether to renew.
-
-1. Will there be a rent increase? We've heard rents in this area have risen significantly and we're hoping any increase will be reasonable. We've been here for three years and have always paid on time.
-
-2. I'd like to add my partner Rahul to the lease. He moved in about four months ago. I should have mentioned it sooner — sorry about that. What's the process?
-
-3. We'd love to get a small dog — a 4kg cavoodle. I know the lease says no pets. Could you put this to the owner? We're happy to pay a pet bond and would keep the apartment in perfect condition.
-
-4. Is there any flexibility on doing a 2-year lease instead of 1-year? We really love it here and want to stay long term.
-
-Looking forward to your response,
-
-Priya Sharma
-Unit 12`,
-    draft: `Dear Priya,
-
-Thank you for reaching out and for your continued tenancy — it's a pleasure managing your home. I'm happy to address each of your questions.
-
-RENT RENEWAL
-I have reviewed current market conditions for comparable properties in Spring Hill and will be presenting a renewal offer to the landlord this week. Given your excellent three-year tenancy and consistent payment history, I will advocate for a modest adjustment in line with CPI rather than the current market rate. I will have a formal written offer to you within 3 business days.
-
-ADDING RAHUL TO THE LEASE
-Absolutely — I'll send you a Tenancy Application form for Rahul to complete today. Once approved, we'll issue an amended lease agreement. A $50 administration fee applies for the lease variation.
-
-PET APPLICATION
-I'll submit a formal pet request to the landlord on your behalf. Please email me a photo of your cavoodle along with any vaccination and desexing records, as landlords tend to respond more favourably to detailed applications. Under Queensland legislation the landlord must respond within 14 days and cannot unreasonably refuse. A pet bond of up to two weeks rent may apply.
-
-TWO-YEAR LEASE
-I'll include a 2-year option in my renewal recommendation to the landlord. Many owners appreciate the stability this provides and it may also work in your favour when negotiating the rent increase.
-
-I'll be in touch shortly with the formal renewal documents. Please let me know if you have any further questions.
-
-Warm regards,
-Sarah Mitchell
-Senior Property Manager | Apex Property Group
-P: (07) 3210 5500 | E: sarah.mitchell@apexproperty.com.au`
-  },
-  {
-    id: 3,
-    from: "James O'Brien",
-    email: 'jamesobrien84@gmail.com',
-    initials: 'JO',
-    time: '8:31 AM',
-    subject: 'Rent payment — short this week, will pay Friday',
-    category: 'payment',
-    aiStatus: 'draft',
-    property: '4 Warwick Street, Indooroopilly QLD 4068',
-    confidence: 91,
-    priority: 'High',
-    flagNote: null,
-    body: `Hi Sarah,
-
-I wanted to give you a heads-up that my rent payment this week is going to be short by about $350. I had an unexpected car repair bill that I had to pay immediately or I would have lost my job (I drive for work).
-
-I get paid on Friday and will make the full top-up payment by end of day Friday the 25th. I know I have a good record — I've been here for two years and have never missed a payment.
-
-I'm really sorry to be in this position. Please let me know if this is okay or if there's anything I need to do.
-
-James O'Brien
-4 Warwick Street`,
-    draft: `Dear James,
-
-Thank you for contacting us ahead of time — we genuinely appreciate tenants who communicate proactively when circumstances change unexpectedly.
-
-I have noted your intention to pay the outstanding balance of $350 by end of day Friday, 25 April. I will update your rental ledger accordingly and hold off on issuing a formal arrears notice, provided the top-up payment is received by that date.
-
-As a reminder, under the Residential Tenancies and Rooming Accommodation Act 2008 (QLD), if rent falls 7 days behind we are required to issue a Notice to Remedy Breach. Because you have notified us before reaching that threshold and have a strong two-year payment history, we are comfortable working with you on this occasion.
-
-Please ensure your payment reference includes your full name and the property address so it is correctly allocated. If Friday's payment is not possible for any reason, please contact me as soon as possible so we can discuss options before the formal process is required.
-
-I trust this matter will be resolved on Friday. Thank you again for your transparency.
-
-Kind regards,
-Sarah Mitchell
-Senior Property Manager | Apex Property Group
-P: (07) 3210 5500 | E: sarah.mitchell@apexproperty.com.au`
-  },
-  {
-    id: 4,
-    from: 'Karen Mills',
-    email: 'karen.mills@bigpond.com',
-    initials: 'KM',
-    time: '7:58 AM',
-    subject: 'THIRD complaint about noise from Unit 9 — enough',
-    category: 'complaint',
-    aiStatus: 'review',
-    property: 'Unit 8, 15 Archer Street, Toowong QLD 4066',
-    confidence: 89,
-    priority: 'High',
-    flagNote: 'Third escalating complaint from same tenant. Formal Notice to Remedy required. QCAT application pathway should be prepared in parallel. Human review essential before responding.',
-    body: `Sarah,
-
-I have sent two previous emails about the noise from Unit 9 and I am beyond frustrated that nothing has changed. This is my third formal complaint.
-
-Last night (Sunday 20 April) the tenant in Unit 9 was playing music and having a party until 3am. My children could not sleep. I have work in the morning and I am exhausted.
-
-I have kept a written log with dates and times as you suggested:
-- 5 April: music and voices until 2:00am
-- 11 April: loud banging and shouting until 1:30am
-- 20 April: party with music until 3:00am (last night)
-
-I called the police last night and they attended but said it was borderline by the time they arrived.
-
-I am telling you now — if this is not resolved within 7 days I will be contacting the Residential Tenancies Authority and considering my options regarding my own lease. I should not have to live like this.
-
-I expect a call from you today.
-
-Karen Mills
-Unit 8`,
-    draft: `Dear Karen,
-
-Thank you for writing again and I sincerely apologise that this situation has continued. Your frustration is completely justified and I want to assure you this matter is now being treated with the urgency it requires.
-
-I have reviewed your documented complaint log and the previous correspondence. Given that this is your third formal complaint with three recorded incidents, I am taking the following immediate steps:
-
-FORMAL NOTICE TO THE TENANT IN UNIT 9
-I will issue a Notice to Remedy Breach (Form 11) to the tenant in Unit 9 today. This is a formal legal notice under Queensland tenancy legislation citing breach of their obligations regarding nuisance and interference with quiet enjoyment.
-
-WRITTEN ACKNOWLEDGEMENT
-You will receive a formal written acknowledgement of your complaint today for your records, confirming the dates and details you have provided.
-
-QCAT PREPARATION
-Should the behaviour continue following the Notice to Remedy, we will apply to the Queensland Civil and Administrative Tribunal (QCAT) for an urgent compliance order. I am preparing this documentation in parallel so we can proceed without delay if required.
-
-I will telephone you this afternoon to speak directly. Please reply with a convenient time and your contact number.
-
-Your right to quiet enjoyment of your home is protected under law and I am committed to enforcing it. This will be resolved.
-
-Kind regards,
-Sarah Mitchell
-Senior Property Manager | Apex Property Group
-P: (07) 3210 5500 | E: sarah.mitchell@apexproperty.com.au`
-  },
-  {
-    id: 5,
-    from: 'David Park',
-    email: 'd.park.bne@gmail.com',
-    initials: 'DP',
-    time: '7:22 AM',
-    subject: 'Rental inquiry — 2BR Collins Street listing',
-    category: 'inquiry',
-    aiStatus: 'draft',
-    property: 'Unit 5, 210 Collins Street, Brisbane City QLD 4000',
-    confidence: 96,
-    priority: 'Normal',
-    flagNote: null,
-    body: `Hi,
-
-I saw your listing on realestate.com.au for the 2-bedroom apartment at 210 Collins Street and I am very interested.
-
-A bit about me: I am 34 years old, work full-time as a civil engineer with Brisbane City Council (permanent position), and I am looking to move with my partner. We have no pets, no children, and are non-smokers. Our combined income is approximately $190,000 per annum so affordability is not a concern.
-
-A few questions:
-1. Is the apartment available from 1 May or is there flexibility on the move-in date?
-2. The listing says parking is "available" — is it included in the rent or an additional cost?
-3. Are the appliances stainless steel as shown in the listing photos?
-4. What is the noise situation like? It looks like it is on a main road.
-
-We would love to arrange an inspection. Are you available this week?
-
-Thanks,
-David Park`,
-    draft: `Dear David,
-
-Thank you for your inquiry regarding Unit 5 at 210 Collins Street — it's a fantastic apartment and you and your partner sound like a wonderful fit.
-
-I'm happy to answer your questions directly.
-
-AVAILABILITY
-The apartment is available from 1 May, which aligns perfectly with your timeline. There is flexibility of up to one week either side if needed — just let me know your preference when you apply.
-
-PARKING
-One secure undercover car space is included in the rent at no additional cost. The space is accessed via the basement entry on Collins Lane (the rear laneway) and is allocated to this apartment.
-
-APPLIANCES
-Yes — the kitchen was updated 18 months ago and features stainless steel Bosch appliances throughout, including a 60cm oven, 4-burner gas cooktop, and integrated dishwasher. All are in excellent condition.
-
-NOISE
-Collins Street does have traffic, however Unit 5 is on Level 8 and faces the internal courtyard rather than the street, which makes a significant difference. The building also has double-glazed windows throughout. Previous tenants have consistently noted it is much quieter than expected for a CBD location.
-
-INSPECTION TIMES
-I have the following available this week:
-  - Wednesday 23 April: 12:00pm or 5:30pm
-  - Thursday 24 April: 12:30pm or 5:30pm
-  - Saturday 26 April: 10:00am
-
-Please reply with your preferred time and I will confirm the details. You are very welcome to bring your partner along.
-
-Looking forward to meeting you,
-Sarah Mitchell
-Senior Property Manager | Apex Property Group
-P: (07) 3210 5500 | E: sarah.mitchell@apexproperty.com.au`
-  },
-  {
-    id: 6,
-    from: 'Lisa Chen',
-    email: 'lisa.chen2@hotmail.com',
-    initials: 'LC',
-    time: '7:05 AM',
-    subject: 'Broken venetian blind — Unit 4B',
-    category: 'maintenance',
-    aiStatus: 'draft',
-    property: 'Unit 4B, 7 Park Road, Woolloongabba QLD 4102',
-    confidence: 98,
-    priority: 'Normal',
-    flagNote: null,
-    body: `Hi Sarah,
-
-I wanted to let you know that the venetian blind in my bedroom has broken. The cord mechanism inside the headrail has snapped and I can no longer open or close the blind properly. Three of the slats have also bent out of shape.
-
-It has been like this for about a week. I work night shift so I sleep during the day and the morning light coming through is really affecting my sleep.
-
-Looking at the damage it seems like it will need a full replacement rather than a repair. I have taken some photos if you need them.
-
-The best times for a tradesperson to visit would be after 3pm on weekdays or any time on the weekend.
-
-Thanks for your help,
-Lisa Chen
-Unit 4B`,
-    draft: `Dear Lisa,
-
-Thank you for letting us know and for providing the photos — they are very helpful.
-
-Based on the images, I agree that the blind will require full replacement rather than repair given the damage to the mechanism and the bent slats. I have raised a maintenance work order with our preferred supplier, Complete Blinds Brisbane, and they will contact you directly to arrange a suitable appointment time.
-
-I have noted in the work order that you work night shifts and are available after 3:00pm on weekdays or any time on weekends, so they will schedule accordingly. The installation itself should take no more than 30 to 45 minutes.
-
-As this is standard wear and tear on a fixed fitting, there is no cost to you. We expect the replacement to be completed within 5 to 7 business days, though Complete Blinds often attend sooner.
-
-In the meantime, if you would like a temporary block-out solution for your bedroom window, please let me know and I can arrange a short-term measure through our maintenance team.
-
-I will send you a confirmation once the appointment time is locked in.
-
-Kind regards,
-Sarah Mitchell
-Senior Property Manager | Apex Property Group
-P: (07) 3210 5500 | E: sarah.mitchell@apexproperty.com.au`
-  }
-];
-
-let selectedId = null;
-const removed = new Set();
-
-function capFirst(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
-
-function priorityClass(p){
-  return {Urgent:'priority-urgent',High:'priority-high',Normal:'priority-normal',Low:'priority-low'}[p]||'priority-normal';
-}
-
-function setNavActive(el){
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  el.classList.add('active');
-}
-
-function renderList(){
-  const container = document.getElementById('emailListContainer');
-  container.innerHTML = '';
-  const visible = EMAILS.filter(e=>!removed.has(e.id));
-  document.getElementById('emailCount').textContent = visible.length+' message'+(visible.length!==1?'s':'');
-  document.getElementById('inboxBadge').textContent = visible.length;
-  visible.forEach(email=>{
-    const div = document.createElement('div');
-    div.className = 'email-item'+(selectedId===email.id?' selected':'');
-    div.id = 'ei-'+email.id;
-    div.onclick = ()=>selectEmail(email.id);
-    const catTag = `<span class="tag tag-${email.category}">${capFirst(email.category)}</span>`;
-    const aiTag = email.aiStatus==='draft'
-      ? `<span class="tag tag-draft">✦ Draft Ready</span>`
-      : `<span class="tag tag-review">⚑ Needs Review</span>`;
-    div.innerHTML = `
-      <div class="email-sender-row">
-        <span class="email-sender">${email.from}</span>
-        <span class="email-time">${email.time}</span>
-      </div>
-      <div class="email-subject">${email.subject}</div>
-      <div class="email-tags">${catTag}${aiTag}</div>`;
-    container.appendChild(div);
-  });
-}
-
-function selectEmail(id){
-  selectedId = id;
-  document.querySelectorAll('.email-item').forEach(el=>el.classList.remove('selected'));
-  const li = document.getElementById('ei-'+id);
-  if(li) li.classList.add('selected');
-  const email = EMAILS.find(e=>e.id===id);
-  if(email) renderReadingPane(email);
-}
-
-function renderReadingPane(email){
-  const pane = document.getElementById('readingPane');
-  const flagBanner = email.flagNote
-    ? `<div class="flag-banner"><span class="flag-banner-icon">⚑</span><div><strong>Human Review Recommended</strong> — ${email.flagNote}</div></div>`
-    : '';
-  pane.innerHTML = `
-    <div class="rp-toolbar">
-      <button class="btn btn-primary" onclick="doSend(${email.id})">↑ Send Draft</button>
-      <button class="btn" onclick="toast('Reply window opened')">↩ Reply</button>
-      <button class="btn" onclick="toast('Forward window opened')">→ Forward</button>
-      <div class="tb-sep"></div>
-      <button class="btn${email.flagNote?' btn-warn':''}" onclick="toast('Flagged for follow-up')">⚑ Flag</button>
-      <button class="btn" onclick="doArchive(${email.id})">✕ Archive</button>
-    </div>
-    <div class="rp-body">
-      ${flagBanner}
-      <div class="email-header">
-        <div class="sender-avatar av-${email.category}">${email.initials}</div>
-        <div class="email-meta">
-          <div class="email-from-name">${email.from}</div>
-          <div class="email-to-line">To: Sarah Mitchell &lt;sarah.mitchell@apexproperty.com.au&gt;</div>
-          <div class="email-subject-line">${email.subject}</div>
-          <div class="email-date-line">Today at ${email.time} · ${email.email}</div>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 PropMind</h1>
+            <p>AI-Powered Property Intelligence Platform</p>
         </div>
-      </div>
-      <div class="ai-analysis-box">
-        <div class="ai-box-header">
-          <span style="font-size:14px">✦</span>
-          <span class="ai-box-title">PropMail AI Analysis</span>
-        </div>
-        <div class="ai-grid">
-          <div>
-            <div class="ai-field-label">Category</div>
-            <div class="ai-field-value"><span class="tag tag-${email.category}">${capFirst(email.category)}</span></div>
-          </div>
-          <div>
-            <div class="ai-field-label">Confidence</div>
-            <div class="conf-row">
-              <div class="conf-track"><div class="conf-fill" id="confFill-${email.id}" style="width:0%"></div></div>
-              <span class="conf-num">${email.confidence}%</span>
+        
+        <div class="content">
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">🤖</div>
+                    <h3>AI Analysis</h3>
+                    <p>Advanced machine learning models analyze property data to provide intelligent insights</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📊</div>
+                    <h3>Market Intelligence</h3>
+                    <p>Real-time market trends and predictive analytics for property values</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">💰</div>
+                    <h3>Investment ROI</h3>
+                    <p>Calculate potential returns and investment strategies instantly</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📍</div>
+                    <h3>Location Insights</h3>
+                    <p>Detailed neighborhood analysis and demographic information</p>
+                </div>
             </div>
-          </div>
-          <div>
-            <div class="ai-field-label">Priority</div>
-            <div class="ai-field-value ${priorityClass(email.priority)}">${email.priority}</div>
-          </div>
-          <div>
-            <div class="ai-field-label">Property</div>
-            <div class="ai-field-value" style="font-size:12px">${email.property}</div>
-          </div>
-          <div class="ai-field-wide">
-            <div class="ai-field-label">Review Flag</div>
-            <div class="review-val ${email.flagNote?'warn':'ok'}">${email.flagNote?'⚑ '+email.flagNote:'✓ No review required — response is ready to send'}</div>
-          </div>
+            
+            <div class="demo-section">
+                <h2>Quick Analysis Demo</h2>
+                <div class="input-group">
+                    <label for="address">Property Address</label>
+                    <input type="text" id="address" placeholder="e.g., 123 Main St, San Francisco, CA 94102">
+                </div>
+                <div class="input-group">
+                    <label for="price">Asking Price ($)</label>
+                    <input type="number" id="price" placeholder="e.g., 1500000" min="0">
+                </div>
+                <div class="input-group">
+                    <label for="type">Property Type</label>
+                    <select id="type">
+                        <option value="">Select Type</option>
+                        <option value="single-family">Single Family Home</option>
+                        <option value="condo">Condo</option>
+                        <option value="townhouse">Townhouse</option>
+                        <option value="multi-family">Multi-Family</option>
+                        <option value="commercial">Commercial</option>
+                    </select>
+                </div>
+                <button onclick="analyzeProperty()">Analyze Property</button>
+                
+                <div class="result-box" id="resultBox">
+                    <h3>Analysis Results</h3>
+                    <p id="resultContent"></p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="email-body-text">${escHtml(email.body)}</div>
-      <div class="draft-box" id="draftBox-${email.id}">
-        <div class="draft-header">
-          <div class="draft-header-title">✦ PropMail AI Draft Response</div>
-          <div class="draft-header-btns">
-            <button class="btn-ghost" onclick="doRegenerate(${email.id})">↺ Regenerate</button>
-            <button class="btn-send-white" onclick="doSend(${email.id})">↑ Send</button>
-          </div>
+        
+        <div class="footer">
+            <p>PropMind © 2024 | <a href="https://github.com/jlivingstone78-lang/propmind">View on GitHub</a></p>
         </div>
-        <div class="draft-content-area">
-          <div class="draft-editable" id="draftContent-${email.id}" contenteditable="true" spellcheck="true"></div>
-        </div>
-        <div class="draft-footer-note">
-          ✦ This response was drafted by PropMail AI based on your tenancy records, property history, and Australian tenancy legislation. Review before sending.
-        </div>
-      </div>
-    </div>`;
-
-  // Set draft text after DOM update
-  const dc = document.getElementById('draftContent-'+email.id);
-  if(dc) dc.innerText = email.draft;
-
-  // Animate confidence bar
-  setTimeout(()=>{
-    const fill = document.getElementById('confFill-'+email.id);
-    if(fill) fill.style.width = email.confidence+'%';
-  }, 60);
-}
-
-function escHtml(s){
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function doSend(id){
-  toast('Draft sent successfully');
-  removeEmail(id);
-}
-
-function doArchive(id){
-  toast('Email archived');
-  removeEmail(id);
-}
-
-function removeEmail(id){
-  const li = document.getElementById('ei-'+id);
-  if(li){
-    li.classList.add('removing');
-    setTimeout(()=>{
-      removed.add(id);
-      renderList();
-      const next = EMAILS.find(e=>!removed.has(e.id));
-      if(next){
-        selectEmail(next.id);
-      } else {
-        selectedId = null;
-        document.getElementById('readingPane').innerHTML =
-          `<div class="no-email"><div class="no-email-icon">✦</div><div class="no-email-txt">All emails processed — great work, Sarah!</div></div>`;
-      }
-    }, 450);
-  }
-}
-
-function doRegenerate(id){
-  const box = document.getElementById('draftBox-'+id);
-  const dc = document.getElementById('draftContent-'+id);
-  if(!box||!dc) return;
-  box.classList.add('shimmer');
-  dc.contentEditable = 'false';
-  setTimeout(()=>{
-    box.classList.remove('shimmer');
-    dc.contentEditable = 'true';
-    toast('Draft regenerated');
-  }, 1400);
-}
-
-function toast(msg){
-  const el = document.getElementById('toast');
-  document.getElementById('toastMsg').textContent = msg;
-  el.classList.add('show');
-  clearTimeout(el._t);
-  el._t = setTimeout(()=>el.classList.remove('show'), 3000);
-}
-
-// Init
-renderList();
-selectEmail(1);
-</script>
+    </div>
+    
+    <script>
+        function analyzeProperty() {
+            const address = document.getElementById('address').value;
+            const price = document.getElementById('price').value;
+            const type = document.getElementById('type').value;
+            
+            if (!address || !price || !type) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            const priceNum = parseFloat(price);
+            const estimatedROI = (Math.random() * 8 + 4).toFixed(2);
+            const marketValue = (priceNum * (1 + (Math.random() * 0.2 - 0.1))).toFixed(0);
+            const recommendation = priceNum < marketValue ? 'Good Buy' : 'Fair Price';
+            
+            const resultHTML = `
+                <strong>Property:</strong> ${address}<br>
+                <strong>Type:</strong> ${type}<br>
+                <strong>Asking Price:</strong> $${parseFloat(price).toLocaleString()}<br>
+                <strong>Estimated Market Value:</strong> $${parseFloat(marketValue).toLocaleString()}<br>
+                <strong>Projected Annual ROI:</strong> ${estimatedROI}%<br>
+                <strong>Recommendation:</strong> <span style="color: ${recommendation === 'Good Buy' ? '#27ae60' : '#f39c12'}; font-weight: bold;">${recommendation}</span><br>
+                <br>
+                <em style="color: #999;">This is a demo analysis. PropMind uses real data for actual recommendations.</em>
+            `;
+            
+            document.getElementById('resultContent').innerHTML = resultHTML;
+            document.getElementById('resultBox').classList.add('active');
+        }
+        
+        // Allow Enter key to trigger analysis
+        document.getElementById('type').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') analyzeProperty();
+        });
+    </script>
 </body>
 </html>
