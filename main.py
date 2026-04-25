@@ -9,7 +9,8 @@ from email.mime.text import MIMEText
 from email.utils import format_datetime, parsedate_to_datetime
 
 from fastapi import FastAPI, HTTPException, Query, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -108,6 +109,9 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="PropMind API", lifespan=lifespan)
 
+_base_dir = os.path.dirname(__file__)
+app.mount("/data", StaticFiles(directory=os.path.join(_base_dir, "data")), name="data")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -121,25 +125,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {
-        "app": "PropMind API",
-        "status": "running",
-        "docs": "/docs",
-        "health": "/health",
-        "endpoints": [
-            "GET  /health",
-            "GET  /api/emails",
-            "GET  /api/emails/{id}",
-            "POST /api/emails/{id}/send",
-            "POST /api/emails/{id}/assign",
-            "POST /api/emails/{id}/ignore",
-            "POST /api/trigger-poll",
-            "POST /api/seed-inbox",
-            "POST /api/reset-demo",
-            "GET  /api/oauth/url",
-            "GET  /api/oauth/callback",
-        ],
-    }
+    return FileResponse(os.path.join(_base_dir, "index.html"))
 
 
 @app.get("/health")
