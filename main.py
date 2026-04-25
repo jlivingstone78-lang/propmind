@@ -1,7 +1,12 @@
+import base64
+import json
 import os
+import time
 import logging
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+from email.mime.text import MIMEText
+from email.utils import format_datetime, parsedate_to_datetime
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse
@@ -221,3 +226,65 @@ def oauth_callback(request: Request, code: str = Query(default=None), error: str
             f"<h2>Error: {exc}</h2><p>Go back and call /api/oauth/url again.</p>",
             status_code=400,
         )
+
+
+# ── Demo seeding ──────────────────────────────────────────────────────────────
+
+DUMMY_DATA_PATH = os.path.join(os.path.dirname(__file__), "data", "dummy_emails.json")
+_SEED_HEADER = "X-PropMind-Seed"
+
+
+def _insert_raw(service, raw: str) -> str:
+    result = service.users().messages().insert(
+        userId="me",
+        internalDateSource="dateHeader",
+        body={"raw": raw, "labelIds": ["INBOX", "UNREAD"]},
+    ).execute()
+    return result["id"]
+
+
+def _build_raw(email: dict, to_address: str) -> str:
+    msg = MIMEText(email["body"], "plain", "utf-8")
+    msg["To"] = to_address
+    msg["From"] = f"{email['from_name']} <{email['from_email']}>"
+    msg["Subject"] = email["subject"]
+    msg[_SEED_HEADER] = "true"
+    try:
+        ts = email.get("timestamp", "")
+        dt = datetime.fromisoformat(ts) if "T" in ts else parsedate_to_datetime(ts)
+        msg["Date"] = format_datetime(dt)
+    except Exception:
+        msg["Date"] = format_datetime(datetime.now(timezone.utc))
+    return base64.urlsafe_b64encode(msg.as_bytes()).decode()
+
+
+@app.post("/api/seed-inbox")
+def seed_inbox():
+    """Insert all dummy tenant emails into the Gmail inbox as UNREAD. Demo use only."""
+    global _gmail_service
+    if _gmail_service is None:
+        _gmail_service = build_service()
+
+    to_address = os.environ.get("GMAIL_ADDRESS", "propmind.test@gmail.com")
+
+    with open(DUMMY_DATA_PATH) as f:
+        emails = json.load(f)
+
+    inserted, failed = [], []
+    for email in emails:
+        try:
+            raw = _build_raw(email, to_address)
+            msg_id = _insert_raw(_gmail_service, raw)
+            inserted.append({"subject": email["subject"], "from": email["from_name"], "gmail_id": msg_id})
+            time.sleep(0.25)
+        except Exception as exc:
+            failed.append({"subject": email["subject"], "error": str(exc)})
+
+    return {
+        "status": "ok",
+        "inserted": len(inserted),
+        "failed": len(failed),
+        "messages": inserted,
+        "errors": failed,
+        "next_step": "Call POST /api/trigger-poll to process them immediately, or wait up to 5 minutes.",
+    }
