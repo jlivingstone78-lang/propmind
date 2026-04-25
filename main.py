@@ -260,19 +260,36 @@ def _build_raw(email: dict, to_address: str) -> str:
 
 
 def _find_gmail_ids_to_trash(service) -> list[str]:
-    """Return IDs from the DB plus any still in Gmail from known dummy senders."""
+    """Return IDs from the DB plus any in Gmail whose sender matches a known dummy address."""
     ids = set(get_all_gmail_ids())
 
-    # Build a Gmail search query from known dummy sender addresses
     with open(DUMMY_DATA_PATH) as f:
         dummy = json.load(f)
-    sender_query = " OR ".join(f"from:{e['from_email']}" for e in dummy)
+    known_senders = {e["from_email"].lower() for e in dummy}
 
-    result = service.users().messages().list(
-        userId="me", q=sender_query, maxResults=200
-    ).execute()
-    for m in result.get("messages", []):
-        ids.add(m["id"])
+    # List all inbox + sent messages, filter by known sender in Python
+    for label in ("INBOX", "SENT"):
+        page_token = None
+        while True:
+            kwargs = {"userId": "me", "labelIds": [label], "maxResults": 200}
+            if page_token:
+                kwargs["pageToken"] = page_token
+            result = service.users().messages().list(**kwargs).execute()
+            for m in result.get("messages", []):
+                detail = service.users().messages().get(
+                    userId="me", id=m["id"], format="metadata",
+                    metadataHeaders=["From"]
+                ).execute()
+                from_header = next(
+                    (h["value"] for h in detail.get("payload", {}).get("headers", [])
+                     if h["name"].lower() == "from"),
+                    ""
+                ).lower()
+                if any(s in from_header for s in known_senders):
+                    ids.add(m["id"])
+            page_token = result.get("nextPageToken")
+            if not page_token:
+                break
 
     return list(ids)
 
