@@ -1,0 +1,22 @@
+# OAuth tokens — never commit
+gmail_token.json
+
+# Local database
+emails.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Environment
+.env
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
