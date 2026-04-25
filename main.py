@@ -259,16 +259,34 @@ def _build_raw(email: dict, to_address: str) -> str:
     return base64.urlsafe_b64encode(msg.as_bytes()).decode()
 
 
+def _find_gmail_ids_to_trash(service) -> list[str]:
+    """Return IDs from the DB plus any still in Gmail from known dummy senders."""
+    ids = set(get_all_gmail_ids())
+
+    # Build a Gmail search query from known dummy sender addresses
+    with open(DUMMY_DATA_PATH) as f:
+        dummy = json.load(f)
+    sender_query = " OR ".join(f"from:{e['from_email']}" for e in dummy)
+
+    result = service.users().messages().list(
+        userId="me", q=sender_query, maxResults=200
+    ).execute()
+    for m in result.get("messages", []):
+        ids.add(m["id"])
+
+    return list(ids)
+
+
 @app.post("/api/reset-demo")
 def reset_demo():
-    """Trash all known emails from Gmail and wipe the database. Leaves a clean slate for demos."""
+    """Trash all seeded emails from Gmail and wipe the database. Clean slate for demos."""
     global _gmail_service
     if _gmail_service is None:
         _gmail_service = build_service()
 
-    gmail_ids = get_all_gmail_ids()
+    to_trash = _find_gmail_ids_to_trash(_gmail_service)
     trashed, skipped = 0, 0
-    for mid in gmail_ids:
+    for mid in to_trash:
         try:
             _gmail_service.users().messages().trash(userId="me", id=mid).execute()
             trashed += 1
