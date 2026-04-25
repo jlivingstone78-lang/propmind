@@ -309,21 +309,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 
   <div class="sec-label">Workspace</div>
   <nav class="nav">
-    <div class="nav-item active">
+    <div class="nav-item active" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
       Dashboard
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       Inbox
       <span class="nbadge b">142</span>
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       Drafts
       <span class="nbadge p">23</span>
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       Review Queue
       <span class="nbadge a">19</span>
@@ -332,20 +332,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 
   <div class="sec-label" style="margin-top:6px">Management</div>
   <nav class="nav">
-    <div class="nav-item">
+    <div class="nav-item" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
       Analytics
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       Properties
       <span class="nsub">18</span>
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       AI Rules
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
       Integrations
     </div>
@@ -353,7 +353,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 
   <div class="hsep"></div>
   <nav class="nav">
-    <div class="nav-item">
+    <div class="nav-item" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M4.93 19.07a10 10 0 010-14.14"/></svg>
       Settings
     </div>
@@ -531,8 +531,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
     <button class="btn btn-p" id="send-btn" onclick="sendDraft()">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;vertical-align:-1px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send Draft
     </button>
-    <button class="btn btn-s">Edit Response</button>
-    <button class="btn btn-g">Assign to Human</button>
+    <button class="btn btn-s" onclick="editDraft()">Edit Response</button>
+    <button class="btn btn-g" onclick="assignHuman()">Assign to Human</button>
   </div>
 </aside>
 
@@ -1058,6 +1058,41 @@ function sendDraft() {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+function editDraft() {
+  switchTab('draft');
+  const box = document.querySelector('#dr-body .ebox p');
+  if (!box) return;
+  box.contentEditable = 'true';
+  box.style.outline = '1px solid var(--blue)';
+  box.style.borderRadius = '4px';
+  box.focus();
+  const btn = document.querySelector('.btn-s');
+  btn.textContent = 'Save Changes';
+  btn.onclick = () => {
+    box.contentEditable = 'false';
+    box.style.outline = '';
+    btn.textContent = 'Edit Response';
+    btn.onclick = editDraft;
+  };
+}
+
+function assignHuman() {
+  const btn = document.querySelector('.btn-g');
+  const orig = btn.textContent;
+  btn.textContent = '✓ Assigned';
+  btn.style.color = 'var(--amb)';
+  btn.style.borderColor = 'var(--amb)';
+  const st = document.getElementById('dr-status');
+  st.textContent = 'Needs Review';
+  st.className = 'drstatus ds-a';
+  setTimeout(() => { btn.textContent = orig; btn.style.color = ''; btn.style.borderColor = ''; }, 2500);
+}
+
+function setNav(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
 
 /* ═══ CHARTS ═══ */
 Chart.defaults.color = '#94a3b8';
