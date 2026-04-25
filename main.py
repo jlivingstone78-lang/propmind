@@ -117,7 +117,30 @@ app.add_middleware(
 )
 
 
-# ── Health ────────────────────────────────────────────────────────────────────
+# ── Root + Health ─────────────────────────────────────────────────────────────
+
+@app.get("/")
+def root():
+    return {
+        "app": "PropMind API",
+        "status": "running",
+        "docs": "/docs",
+        "health": "/health",
+        "endpoints": [
+            "GET  /health",
+            "GET  /api/emails",
+            "GET  /api/emails/{id}",
+            "POST /api/emails/{id}/send",
+            "POST /api/emails/{id}/assign",
+            "POST /api/emails/{id}/ignore",
+            "POST /api/trigger-poll",
+            "POST /api/seed-inbox",
+            "POST /api/reset-demo",
+            "GET  /api/oauth/url",
+            "GET  /api/oauth/callback",
+        ],
+    }
+
 
 @app.get("/health")
 def health():
