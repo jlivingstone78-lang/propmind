@@ -3,8 +3,10 @@ import logging
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,7 +14,13 @@ load_dotenv()
 import database
 import ai_service
 import scheduler
-from gmail_service import build_service, fetch_unread_emails, mark_as_read
+from gmail_service import (
+    build_service,
+    fetch_unread_emails,
+    mark_as_read,
+    get_auth_url,
+    complete_auth_from_callback,
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -103,11 +111,15 @@ app.add_middleware(
 )
 
 
+# ── Health ────────────────────────────────────────────────────────────────────
+
 @app.get("/health")
 def health():
     count = database.count_emails(TENANT_ID)
     return {"status": "ok", "tenant": TENANT_ID, "email_count": count}
 
+
+# ── Email CRUD ────────────────────────────────────────────────────────────────
 
 @app.get("/api/emails")
 def list_emails(
@@ -156,3 +168,56 @@ def trigger_poll():
     poll_inbox()
     count = database.count_emails(TENANT_ID)
     return {"status": "ok", "message": "Poll complete", "email_count": count}
+
+
+# ── Gmail OAuth ───────────────────────────────────────────────────────────────
+
+@app.get("/api/oauth/url")
+def oauth_url():
+    """Step 1: returns the Google consent URL. Visit it in a browser."""
+    url = get_auth_url()
+    return {
+        "auth_url": url,
+        "instructions": "Visit auth_url in your browser and approve access. Google will redirect back automatically.",
+    }
+
+
+@app.get("/api/oauth/callback")
+def oauth_callback(request: Request, code: str = Query(default=None), error: str = Query(default=None)):
+    """Step 2 (automatic): Google redirects here after the user approves access."""
+    global _gmail_service
+
+    if error:
+        return HTMLResponse(
+            f"<h2>OAuth error: {error}</h2><p>Close this tab and try again.</p>",
+            status_code=400,
+        )
+    if not code:
+        return HTMLResponse(
+            "<h2>Missing code parameter.</h2><p>Close this tab and try again.</p>",
+            status_code=400,
+        )
+
+    try:
+        token_b64 = complete_auth_from_callback(code)
+        _gmail_service = None  # force rebuild on next poll
+        return HTMLResponse(f"""
+<html><body style="font-family:sans-serif;max-width:600px;margin:40px auto;padding:0 20px">
+<h2>✅ Gmail authorised!</h2>
+<p>PropMind can now read the <strong>propmind.test@gmail.com</strong> inbox.</p>
+<h3>One more step — make this permanent on Railway:</h3>
+<ol>
+<li>Go to your Railway project → <strong>Variables</strong></li>
+<li>Add a new variable: <code>GMAIL_TOKEN_JSON</code></li>
+<li>Paste the value below as the variable value:</li>
+</ol>
+<textarea rows="4" style="width:100%;font-size:11px;word-break:break-all">{token_b64}</textarea>
+<p>This prevents you needing to re-authorise after every Railway redeploy.</p>
+<p><strong>You can close this tab.</strong></p>
+</body></html>
+""")
+    except RuntimeError as exc:
+        return HTMLResponse(
+            f"<h2>Error: {exc}</h2><p>Go back and call /api/oauth/url again.</p>",
+            status_code=400,
+        )
