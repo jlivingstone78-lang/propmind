@@ -322,6 +322,32 @@ def reset_demo():
     }
 
 
+@app.get("/api/debug/inbox")
+def debug_inbox():
+    """Temporary: list what Railway sees in the Gmail inbox (first 50 messages)."""
+    global _gmail_service
+    if _gmail_service is None:
+        _gmail_service = build_service()
+    result = _gmail_service.users().messages().list(
+        userId="me", maxResults=50
+    ).execute()
+    messages = result.get("messages", [])
+    rows = []
+    for m in messages:
+        detail = _gmail_service.users().messages().get(
+            userId="me", id=m["id"], format="metadata",
+            metadataHeaders=["From", "Subject"]
+        ).execute()
+        headers = {h["name"]: h["value"] for h in detail.get("payload", {}).get("headers", [])}
+        rows.append({
+            "id": m["id"],
+            "from": headers.get("From", ""),
+            "subject": headers.get("Subject", ""),
+            "labels": detail.get("labelIds", []),
+        })
+    return {"total": len(rows), "messages": rows}
+
+
 @app.post("/api/seed-inbox")
 def seed_inbox():
     """Insert all dummy tenant emails into the Gmail inbox as UNREAD. Demo use only."""
