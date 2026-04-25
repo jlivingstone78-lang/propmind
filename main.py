@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import database
+from database import get_all_gmail_ids, clear_all_emails
 import ai_service
 import scheduler
 from gmail_service import (
@@ -256,6 +257,34 @@ def _build_raw(email: dict, to_address: str) -> str:
     except Exception:
         msg["Date"] = format_datetime(datetime.now(timezone.utc))
     return base64.urlsafe_b64encode(msg.as_bytes()).decode()
+
+
+@app.post("/api/reset-demo")
+def reset_demo():
+    """Trash all known emails from Gmail and wipe the database. Leaves a clean slate for demos."""
+    global _gmail_service
+    if _gmail_service is None:
+        _gmail_service = build_service()
+
+    gmail_ids = get_all_gmail_ids()
+    trashed, skipped = 0, 0
+    for mid in gmail_ids:
+        try:
+            _gmail_service.users().messages().trash(userId="me", id=mid).execute()
+            trashed += 1
+            time.sleep(0.1)
+        except Exception:
+            skipped += 1
+
+    clear_all_emails()
+    logger.info("Demo reset: trashed %d Gmail messages, wiped DB", trashed)
+    return {
+        "status": "ok",
+        "gmail_messages_trashed": trashed,
+        "gmail_messages_skipped": skipped,
+        "database_cleared": True,
+        "next_step": "Call POST /api/seed-inbox then POST /api/trigger-poll to reload.",
+    }
 
 
 @app.post("/api/seed-inbox")

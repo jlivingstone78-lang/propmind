@@ -100,3 +100,15 @@ def count_emails(tenant_id: str) -> int:
             (tenant_id,),
         ).fetchone()
         return row[0]
+
+
+def get_all_gmail_ids() -> list[str]:
+    with get_conn() as conn:
+        rows = conn.execute("SELECT gmail_message_id FROM emails").fetchall()
+        return [r[0] for r in rows]
+
+
+def clear_all_emails():
+    with get_conn() as conn:
+        conn.execute("DELETE FROM emails")
+        conn.commit()
