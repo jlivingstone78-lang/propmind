@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PropMind — AI Email Agent</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -202,17 +203,41 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .ci{background:rgba(245,158,11,.15);color:var(--amb)}
 .co{background:rgba(6,182,212,.15);color:var(--cyan)}
 
-/* ── Analytics View ── */
-.coming-soon{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:420px;gap:14px;
-  background:var(--card);border:1px solid var(--border);border-radius:12px}
-.cs-icon{width:58px;height:58px;border-radius:16px;
-  background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(139,92,246,.12));
-  border:1px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;font-size:28px}
-.cs-title{font-size:19px;font-weight:700;letter-spacing:-.3px}
-.cs-sub{font-size:13px;color:var(--t3)}
+/* ── Analytics ── */
+.a-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.akpi{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:17px 20px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s}
+.akpi:hover{border-color:var(--border2);transform:translateY(-1px)}
+.akpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.akpi.ab::before{background:linear-gradient(90deg,var(--blue),var(--purp))}
+.akpi.ag::before{background:linear-gradient(90deg,var(--grn),var(--cyan))}
+.akpi.ap::before{background:linear-gradient(90deg,var(--purp),#ec4899)}
+.akpi.aa::before{background:linear-gradient(90deg,var(--amb),var(--red))}
+.akpi-label{font-size:10.5px;font-weight:600;letter-spacing:.8px;color:var(--t3);
+  text-transform:uppercase;margin-bottom:9px}
+.akpi-val{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1}
+.akpi-val.cb{color:var(--bluL)}.akpi-val.cg{color:var(--grn)}
+.akpi-val.cp{color:var(--purL)}.akpi-val.ca{color:var(--amb)}
+.akpi-val sup{font-size:13px;font-weight:600;vertical-align:super}
+.akpi-sub{font-size:11px;color:var(--t3);margin-top:6px}
+.akpi-sub .up{color:var(--grn);font-weight:600}
+.akpi-sub .dn{color:var(--red);font-weight:600}
+
+.a-row{display:grid;gap:14px}
+.a-row.r-2-1{grid-template-columns:2fr 1fr}
+.a-row.r-1-1{grid-template-columns:1fr 1fr}
+
+.achart{background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:18px 20px}
+.achart-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.achart-sub{font-size:11px;color:var(--t3);margin-bottom:16px}
+.achart-wrap{position:relative;height:210px}
+.achart-wrap.tall{height:240px}
+.achart-wrap.donut{height:170px;max-width:180px;margin:0 auto}
+.aleg{display:flex;flex-direction:column;gap:5px;margin-top:14px}
+.aleg-row{display:flex;align-items:center;gap:8px;font-size:11.5px}
+.aleg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.aleg-lbl{flex:1;color:var(--t2)}.aleg-val{font-weight:600;color:var(--t1)}
 
 /* ── Overlay ── */
 .overlay{position:fixed;inset:0;background:rgba(4,12,30,.72);
@@ -433,11 +458,74 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 
   <!-- ── Analytics View ── -->
   <div id="view-analytics" class="view" style="display:none">
-    <div class="coming-soon">
-      <div class="cs-icon">📊</div>
-      <div class="cs-title">Analytics</div>
-      <div class="cs-sub">Coming soon — full performance reporting and trends.</div>
+
+    <!-- KPI Cards -->
+    <div class="a-kpi">
+      <div class="akpi ab">
+        <div class="akpi-label">Emails This Month</div>
+        <div class="akpi-val cb">847</div>
+        <div class="akpi-sub"><span class="up">↑ 23%</span> vs last month (689)</div>
+      </div>
+      <div class="akpi ag">
+        <div class="akpi-label">AI Auto-Handled</div>
+        <div class="akpi-val cg">87<sup>%</sup></div>
+        <div class="akpi-sub"><span class="up">↑ 5%</span> vs last month (82%)</div>
+      </div>
+      <div class="akpi ap">
+        <div class="akpi-label">Avg Response Time</div>
+        <div class="akpi-val cp">4.2<sup>m</sup></div>
+        <div class="akpi-sub"><span class="up">↓ 98%</span> vs 6 hr manual avg</div>
+      </div>
+      <div class="akpi aa">
+        <div class="akpi-label">Time Saved This Week</div>
+        <div class="akpi-val ca">22.4<sup>h</sup></div>
+        <div class="akpi-sub"><span class="up">↑ 12%</span> vs last week (20.0h)</div>
+      </div>
     </div>
+
+    <!-- Row 1: Volume trend + Category donut -->
+    <div class="a-row r-2-1">
+      <div class="achart">
+        <div class="achart-title">Email Volume — Last 7 Days</div>
+        <div class="achart-sub">Total received vs AI handled</div>
+        <div class="achart-wrap"><canvas id="a-vol"></canvas></div>
+      </div>
+      <div class="achart">
+        <div class="achart-title">Email Categories</div>
+        <div class="achart-sub">This week's breakdown</div>
+        <div class="achart-wrap donut"><canvas id="a-cat"></canvas></div>
+        <div class="aleg" id="a-cat-leg"></div>
+      </div>
+    </div>
+
+    <!-- Row 2: Response time + Time saved -->
+    <div class="a-row r-1-1">
+      <div class="achart">
+        <div class="achart-title">Response Time: Before vs With PropMind</div>
+        <div class="achart-sub">Daily average in minutes — dual scale</div>
+        <div class="achart-wrap"><canvas id="a-resp"></canvas></div>
+      </div>
+      <div class="achart">
+        <div class="achart-title">Time Saved Per Day</div>
+        <div class="achart-sub">Minutes reclaimed from manual handling — last 7 days</div>
+        <div class="achart-wrap"><canvas id="a-time"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Row 3: Top properties + AI confidence -->
+    <div class="a-row r-1-1">
+      <div class="achart">
+        <div class="achart-title">Top Properties by Email Volume</div>
+        <div class="achart-sub">Most active addresses this month</div>
+        <div class="achart-wrap tall"><canvas id="a-props"></canvas></div>
+      </div>
+      <div class="achart">
+        <div class="achart-title">AI Confidence Distribution</div>
+        <div class="achart-sub">Emails by confidence score bracket</div>
+        <div class="achart-wrap"><canvas id="a-conf"></canvas></div>
+      </div>
+    </div>
+
   </div>
 
 </main>
@@ -1029,6 +1117,177 @@ function setNav(el) {
   document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
   const target = document.getElementById('view-' + view);
   if (target) target.style.display = '';
+  if (view === 'analytics') initAnalytics();
+}
+
+/* ─── ANALYTICS CHARTS ─── */
+let _analyticsReady = false;
+
+function initAnalytics() {
+  if (_analyticsReady) return;
+  _analyticsReady = true;
+
+  Chart.defaults.color = '#94a3b8';
+  Chart.defaults.borderColor = 'rgba(30,45,69,.7)';
+  Chart.defaults.font.family = "-apple-system,'Inter','Segoe UI',sans-serif";
+  Chart.defaults.font.size = 11;
+
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const grid = 'rgba(30,45,69,.5)';
+
+  /* 1 — Weekly Volume */
+  new Chart(document.getElementById('a-vol'), {
+    type: 'line',
+    data: {
+      labels: days,
+      datasets: [
+        {
+          label: 'Total Emails',
+          data: [98,45,38,112,87,134,142],
+          borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,.07)',
+          borderWidth: 2.5, pointBackgroundColor: '#3b82f6', pointBorderColor: '#0d1630',
+          pointRadius: 4, pointHoverRadius: 6, tension: 0.4, fill: true,
+        },
+        {
+          label: 'AI Handled',
+          data: [85,39,33,97,76,117,124],
+          borderColor: '#8b5cf6', backgroundColor: 'rgba(139,92,246,.05)',
+          borderWidth: 2, pointBackgroundColor: '#8b5cf6', pointBorderColor: '#0d1630',
+          pointRadius: 3, pointHoverRadius: 5, tension: 0.4, fill: true, borderDash: [5,3],
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'top', labels: { boxWidth: 10, padding: 14, usePointStyle: true, pointStyle: 'circle' } } },
+      scales: { x: { grid: { color: grid } }, y: { grid: { color: grid }, beginAtZero: true } },
+      animation: { duration: 1000 }
+    }
+  });
+
+  /* 2 — Category donut */
+  const catL = ['Maintenance','Lease','Payments','Complaints','Inspections','General'];
+  const catD = [54,31,21,17,13,6];
+  const catC = ['#3b82f6','#8b5cf6','#10b981','#ef4444','#f59e0b','#06b6d4'];
+  new Chart(document.getElementById('a-cat'), {
+    type: 'doughnut',
+    data: { labels: catL, datasets: [{ data: catD, backgroundColor: catC.map(c=>c+'bb'), borderColor: catC, borderWidth: 2, hoverOffset: 8 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '68%',
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw}` } } },
+      animation: { animateRotate: true, duration: 1000 }
+    }
+  });
+  const legEl = document.getElementById('a-cat-leg');
+  catL.forEach((l,i) => legEl.insertAdjacentHTML('beforeend',
+    `<div class="aleg-row"><div class="aleg-dot" style="background:${catC[i]}"></div>
+     <div class="aleg-lbl">${l}</div><div class="aleg-val">${catD[i]}</div></div>`));
+
+  /* 3 — Response time (dual Y-axis) */
+  new Chart(document.getElementById('a-resp'), {
+    type: 'line',
+    data: {
+      labels: days,
+      datasets: [
+        {
+          label: 'Before PropMind',
+          data: [360,390,345,420,380,410,355],
+          yAxisID: 'y1', borderColor: '#f97316', backgroundColor: 'rgba(249,115,22,.08)',
+          borderWidth: 2.5, pointBackgroundColor: '#f97316', pointBorderColor: '#0d1630',
+          pointRadius: 4, pointHoverRadius: 6, fill: true, tension: 0.4,
+        },
+        {
+          label: 'With PropMind',
+          data: [4.8,5.2,4.5,6.1,5.0,4.3,4.2],
+          yAxisID: 'y2', borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,.08)',
+          borderWidth: 2.5, pointBackgroundColor: '#10b981', pointBorderColor: '#0d1630',
+          pointRadius: 4, pointHoverRadius: 6, fill: true, tension: 0.4,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', labels: { boxWidth: 10, padding: 14, usePointStyle: true, pointStyle: 'circle' } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} min` } }
+      },
+      scales: {
+        x: { grid: { color: grid } },
+        y1: { position: 'left', grid: { color: grid }, ticks: { color: '#f97316', callback: v => v+'m' }, title: { display: true, text: 'Before (min)', color: '#f97316', font: { size: 10 } } },
+        y2: { position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#10b981', callback: v => v+'m' }, title: { display: true, text: 'PropMind (min)', color: '#10b981', font: { size: 10 } } }
+      },
+      animation: { duration: 1100 }
+    }
+  });
+
+  /* 4 — Time saved bar */
+  new Chart(document.getElementById('a-time'), {
+    type: 'bar',
+    data: {
+      labels: days,
+      datasets: [{
+        label: 'Minutes Saved',
+        data: [45,62,58,71,83,67,90],
+        backgroundColor: ['rgba(59,130,246,.7)','rgba(59,130,246,.7)','rgba(59,130,246,.7)','rgba(59,130,246,.7)','rgba(139,92,246,.8)','rgba(59,130,246,.7)','rgba(16,185,129,.85)'],
+        borderColor: ['#3b82f6','#3b82f6','#3b82f6','#3b82f6','#8b5cf6','#3b82f6','#10b981'],
+        borderWidth: 2, borderRadius: 6, borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.raw} min saved` } } },
+      scales: { x: { grid: { color: grid } }, y: { grid: { color: grid }, beginAtZero: true, suggestedMax: 100, ticks: { callback: v => v+'m' } } },
+      animation: { duration: 900 }
+    }
+  });
+
+  /* 5 — Top properties (horizontal bar) */
+  new Chart(document.getElementById('a-props'), {
+    type: 'bar',
+    data: {
+      labels: ['12 Maple St, Brisbane','88 Park Ave, Sydney','8 Harbour St, Brisbane','44 Creek Rd, Toowoomba','33 Ocean View Dr, Bondi','67 Palm Ct, Cairns'],
+      datasets: [{
+        label: 'Emails',
+        data: [34,28,22,19,16,14],
+        backgroundColor: ['rgba(59,130,246,.7)','rgba(139,92,246,.7)','rgba(16,185,129,.7)','rgba(6,182,212,.7)','rgba(245,158,11,.7)','rgba(239,68,68,.7)'],
+        borderColor: ['#3b82f6','#8b5cf6','#10b981','#06b6d4','#f59e0b','#ef4444'],
+        borderWidth: 2, borderRadius: 5, borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.raw} emails` } } },
+      scales: {
+        x: { grid: { color: grid }, beginAtZero: true },
+        y: { grid: { color: 'transparent' }, ticks: { color: '#94a3b8', font: { size: 10.5 } } }
+      },
+      animation: { duration: 1000 }
+    }
+  });
+
+  /* 6 — AI Confidence distribution */
+  new Chart(document.getElementById('a-conf'), {
+    type: 'bar',
+    data: {
+      labels: ['90–100%','80–89%','70–79%','60–69%','50–59%','< 50%'],
+      datasets: [{
+        label: 'Emails',
+        data: [45,31,18,12,8,5],
+        backgroundColor: ['rgba(16,185,129,.75)','rgba(59,130,246,.75)','rgba(139,92,246,.75)','rgba(245,158,11,.75)','rgba(249,115,22,.75)','rgba(239,68,68,.75)'],
+        borderColor: ['#10b981','#3b82f6','#8b5cf6','#f59e0b','#f97316','#ef4444'],
+        borderWidth: 2, borderRadius: 5, borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.raw} emails` } } },
+      scales: { x: { grid: { color: grid } }, y: { grid: { color: grid }, beginAtZero: true } },
+      animation: { duration: 900 }
+    }
+  });
 }
 
 /* ─── DEMO FEED POLLING ─── */
