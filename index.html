@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PropMind — AI Email Agent</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -19,7 +18,7 @@
   --amb:#f59e0b;--ambG:rgba(245,158,11,.3);
   --red:#ef4444;--redG:rgba(239,68,68,.3);
   --t1:#e2e8f0;--t2:#94a3b8;--t3:#475569;--t4:#1e293b;
-  --sw:240px;--hh:66px;
+  --sw:240px;--hh:58px;
 }
 
 html{font-size:14px}
@@ -117,105 +116,103 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .ndot{position:absolute;top:5px;right:5px;width:7px;height:7px;
   border-radius:50%;background:var(--red);border:1.5px solid var(--bg1)}
 
-/* ── Content ── */
-.content{padding:22px;display:flex;flex-direction:column;gap:22px}
+/* ── Views ── */
+.view{padding:20px 22px;display:flex;flex-direction:column;gap:16px}
 
-/* ── Stats Bar ── */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.scard{background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:17px 20px;position:relative;overflow:hidden;
-  transition:border-color .2s,transform .2s}
-.scard:hover{border-color:var(--border2);transform:translateY(-1px)}
-.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
-.scard.sb::before{background:linear-gradient(90deg,var(--blue),var(--purp))}
-.scard.sg::before{background:linear-gradient(90deg,var(--grn),var(--cyan))}
-.scard.sp::before{background:linear-gradient(90deg,var(--purp),#ec4899)}
-.scard.sa::before{background:linear-gradient(90deg,var(--amb),var(--red))}
-.slabel{font-size:10.5px;font-weight:600;letter-spacing:.8px;color:var(--t3);
-  text-transform:uppercase;margin-bottom:9px}
-.sval{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1}
-.sval.cb{color:var(--bluL)}.sval.cg{color:var(--grn)}
-.sval.cp{color:var(--purL)}.sval.ca{color:var(--amb)}
-.sval sup{font-size:15px;font-weight:600;vertical-align:super}
-.ssub{font-size:11px;color:var(--t3);margin-top:6px}
-.ssub .up{color:var(--grn);font-weight:600}
-.ssub .dn{color:var(--red);font-weight:600}
+/* ── Stats Bar (slim) ── */
+.statsbar{
+  display:flex;align-items:center;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;height:48px;flex-shrink:0}
+.stat-item{display:flex;align-items:center;gap:10px;
+  padding:0 24px;flex:1;justify-content:center}
+.stat-label{font-size:10.5px;font-weight:600;letter-spacing:.6px;
+  color:var(--t3);text-transform:uppercase;white-space:nowrap}
+.stat-val{font-size:21px;font-weight:800;letter-spacing:-1px;color:var(--bluL)}
+.stat-val.sv-grn{color:var(--grn)}
+.stat-val.sv-amb{color:var(--amb)}
+.stat-unit{font-size:11px;font-weight:600;margin-left:1px}
+.stat-sep{width:1px;height:20px;background:var(--border);flex-shrink:0}
 
-/* ── Panels Grid ── */
-.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.panel{background:var(--card);border:1px solid var(--border);
-  border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
-.ph{display:flex;align-items:center;gap:9px;padding:13px 15px;
-  border-bottom:1px solid var(--border);position:relative}
-.ph::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0}
-.p-grn .ph::before{background:var(--grn)}
-.p-amb .ph::before{background:var(--amb)}
-.p-red .ph::before{background:var(--red)}
-.p-blu .ph::before{background:var(--blue)}
-.picon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;
-  justify-content:center;font-size:13px;flex-shrink:0}
-.p-grn .picon{background:rgba(16,185,129,.15)}
-.p-amb .picon{background:rgba(245,158,11,.15)}
-.p-red .picon{background:rgba(239,68,68,.15)}
-.p-blu .picon{background:rgba(59,130,246,.15)}
-.ptitle{font-size:12.5px;font-weight:700;flex:1}
-.pcnt{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px}
-.p-grn .pcnt{background:rgba(16,185,129,.15);color:var(--grn)}
-.p-amb .pcnt{background:rgba(245,158,11,.15);color:var(--amb)}
-.p-red .pcnt{background:rgba(239,68,68,.15);color:var(--red)}
-.p-blu .pcnt{background:rgba(59,130,246,.15);color:var(--bluL)}
+/* ── Email List Card ── */
+.elist-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;overflow:hidden}
+.elist-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;border-bottom:1px solid var(--border)}
+.elist-hdr-left{display:flex;align-items:center;gap:10px}
+.elist-title{font-size:13px;font-weight:700}
+.elist-cnt{font-size:11px;font-weight:700;padding:2px 9px;border-radius:10px;
+  background:rgba(59,130,246,.15);color:var(--bluL)}
+.elist-cols{
+  display:flex;align-items:center;gap:12px;padding:6px 16px;
+  border-bottom:1px solid var(--border);
+  font-size:10px;font-weight:600;letter-spacing:.7px;
+  color:var(--t3);text-transform:uppercase}
+.col-dot{width:8px;flex-shrink:0}
+.col-av{width:32px;flex-shrink:0}
+.col-snd{width:130px;flex-shrink:0}
+.col-prop{width:155px;flex-shrink:0}
+.col-subj{flex:1;min-width:0}
+.col-badge{width:90px;flex-shrink:0}
+.col-time{width:56px;flex-shrink:0;text-align:right}
 
-/* ── Email Cards ── */
-.elist{display:flex;flex-direction:column}
-.ecard{display:flex;gap:11px;padding:12px 15px;cursor:pointer;
-  transition:background .14s;border-bottom:1px solid var(--border);
+/* ── Email Rows ── */
+.erow{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 16px;cursor:pointer;
+  transition:background .13s;border-bottom:1px solid var(--border);
   position:relative}
-.ecard:last-child{border-bottom:none}
-.ecard:hover{background:var(--card-h)}
-.ecard.active{background:rgba(59,130,246,.07)}
-.ecard.active::after{content:'';position:absolute;left:0;top:0;bottom:0;
+.erow:last-child{border-bottom:none}
+.erow:hover{background:var(--card-h)}
+.erow.active{background:rgba(59,130,246,.07)}
+.erow.active::after{content:'';position:absolute;left:0;top:0;bottom:0;
   width:2px;background:var(--blue)}
-.eav{width:35px;height:35px;border-radius:9px;flex-shrink:0;
+@keyframes slideIn{
+  from{opacity:0;transform:translateY(-10px)}
+  to{opacity:1;transform:translateY(0)}}
+.erow.new-anim{animation:slideIn .38s ease-out forwards}
+
+.urg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.u-red{background:var(--red);box-shadow:0 0 5px var(--redG);animation:pdpulse 1.8s ease-in-out infinite}
+.u-amb{background:var(--amb);animation:pdpulse 1.8s ease-in-out infinite}
+.u-grn{background:var(--grn)}
+@keyframes pdpulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.eav{width:32px;height:32px;border-radius:8px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:700;color:#fff;margin-top:1px}
-.ebody{flex:1;min-width:0}
-.etop{display:flex;align-items:center;gap:5px;margin-bottom:2px}
-.esndr{font-size:12.5px;font-weight:600;flex:1;
+  font-size:11px;font-weight:700;color:#fff}
+
+.ecol-snd{width:130px;font-size:12.5px;font-weight:600;flex-shrink:0;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.etime{font-size:11px;color:var(--t3);white-space:nowrap;flex-shrink:0}
-.esubj{font-size:12px;font-weight:500;color:var(--t2);margin-bottom:3px;
+.ecol-prop{width:155px;font-size:11.5px;color:var(--t3);flex-shrink:0;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.eprev{font-size:11.5px;color:var(--t3);
+.ecol-subj{flex:1;min-width:0;font-size:12.5px;color:var(--t2);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.emeta{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}
-.cbadge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px}
+.ecol-time{width:56px;font-size:11px;color:var(--t3);text-align:right;flex-shrink:0}
+
+/* ── Category Badges ── */
+.cbadge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;
+  flex-shrink:0;white-space:nowrap}
 .cm{background:rgba(59,130,246,.15);color:var(--bluL)}
 .cl{background:rgba(139,92,246,.15);color:var(--purL)}
 .cp{background:rgba(16,185,129,.15);color:var(--grn)}
 .cc{background:rgba(239,68,68,.15);color:#fca5a5}
 .ci{background:rgba(245,158,11,.15);color:var(--amb)}
 .co{background:rgba(6,182,212,.15);color:var(--cyan)}
-.propbadge{font-size:10px;color:var(--t3);display:flex;align-items:center;gap:3px}
-.pdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.pdot.r{background:var(--red);box-shadow:0 0 5px var(--redG);
-  animation:pdpulse 1.8s ease-in-out infinite}
-.pdot.g{background:var(--grn)}
-.pdot.a{background:var(--amb);animation:pdpulse 1.8s ease-in-out infinite}
-@keyframes pdpulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* ── Charts ── */
-.chrow{display:grid;grid-template-columns:1fr 2fr 1fr;gap:14px}
-.ccard{background:var(--card);border:1px solid var(--border);
-  border-radius:12px;padding:18px 20px}
-.ctitle{font-size:13px;font-weight:700;margin-bottom:3px}
-.csub{font-size:11px;color:var(--t3);margin-bottom:16px}
-.cwrap{position:relative}
-.cwrap.donut{max-width:200px;margin:0 auto}
-.cwrap.line canvas{max-height:215px}
-.cleg{display:flex;flex-direction:column;gap:6px;margin-top:14px}
-.crow{display:flex;align-items:center;gap:8px;font-size:11.5px}
-.cdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.clbl{flex:1;color:var(--t2)}.cval{font-weight:600;color:var(--t1)}
+/* ── Analytics View ── */
+.coming-soon{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:420px;gap:14px;
+  background:var(--card);border:1px solid var(--border);border-radius:12px}
+.cs-icon{width:58px;height:58px;border-radius:16px;
+  background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(139,92,246,.12));
+  border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;font-size:28px}
+.cs-title{font-size:19px;font-weight:700;letter-spacing:-.3px}
+.cs-sub{font-size:13px;color:var(--t3)}
 
 /* ── Overlay ── */
 .overlay{position:fixed;inset:0;background:rgba(4,12,30,.72);
@@ -309,14 +306,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 
   <div class="sec-label">Workspace</div>
   <nav class="nav">
-    <div class="nav-item active" onclick="setNav(this)">
+    <div class="nav-item active" data-view="dashboard" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
       Dashboard
     </div>
-    <div class="nav-item" onclick="setNav(this)">
+    <div class="nav-item" data-view="dashboard" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       Inbox
-      <span class="nbadge b">142</span>
+      <span class="nbadge b" id="inbox-badge">142</span>
     </div>
     <div class="nav-item" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
@@ -332,7 +329,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 
   <div class="sec-label" style="margin-top:6px">Management</div>
   <nav class="nav">
-    <div class="nav-item" onclick="setNav(this)">
+    <div class="nav-item" data-view="analytics" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
       Analytics
     </div>
@@ -376,7 +373,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
   <header class="hdr">
     <div class="hdr-title">
       <h1>Email Dashboard <span class="live-badge"><span class="live-dot"></span>Live</span></h1>
-      <p>Friday, 25 April 2025 · All 18 properties</p>
+      <p id="hdr-date">All 18 properties</p>
     </div>
     <div class="srch">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -391,120 +388,58 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
     </button>
   </header>
 
-  <div class="content">
+  <!-- ── Dashboard View ── -->
+  <div id="view-dashboard" class="view">
 
-    <!-- Stats -->
-    <div class="stats">
-      <div class="scard sb">
-        <div class="slabel">Emails Today</div>
-        <div class="sval cb">142</div>
-        <div class="ssub"><span class="up">↑ 18%</span> vs yesterday (120)</div>
+    <!-- Slim Stats Bar -->
+    <div class="statsbar">
+      <div class="stat-item">
+        <span class="stat-label">Emails Today</span>
+        <span class="stat-val" id="stat-emails">142</span>
       </div>
-      <div class="scard sg">
-        <div class="slabel">Time Saved Today</div>
-        <div class="sval cg">3.2<sup style="font-size:13px">hrs</sup></div>
-        <div class="ssub"><span class="up">↑ 12%</span> vs yesterday</div>
+      <div class="stat-sep"></div>
+      <div class="stat-item">
+        <span class="stat-label">Time Saved</span>
+        <span class="stat-val sv-grn">3.2<span class="stat-unit">hrs</span></span>
       </div>
-      <div class="scard sp">
-        <div class="slabel">Avg Response Time</div>
-        <div class="sval cp">4.2<sup style="font-size:13px">m</sup></div>
-        <div class="ssub"><span class="up">↓ 34%</span> faster than manual</div>
-      </div>
-      <div class="scard sa">
-        <div class="slabel">Pending Review</div>
-        <div class="sval ca">19</div>
-        <div class="ssub"><span class="dn">↑ 4</span> since 9:00 AM</div>
+      <div class="stat-sep"></div>
+      <div class="stat-item">
+        <span class="stat-label">Pending Action</span>
+        <span class="stat-val sv-amb" id="stat-pending">—</span>
       </div>
     </div>
 
-    <!-- Panels -->
-    <div class="pgrid">
-      <div class="panel p-grn">
-        <div class="ph">
-          <div class="picon">✓</div>
-          <div class="ptitle">Draft Responses Ready</div>
-          <div class="pcnt">3</div>
-        </div>
-        <div class="elist" id="p-draft"></div>
-      </div>
-      <div class="panel p-amb">
-        <div class="ph">
-          <div class="picon">⚑</div>
-          <div class="ptitle">Requires Human Review</div>
-          <div class="pcnt">3</div>
-        </div>
-        <div class="elist" id="p-review"></div>
-      </div>
-      <div class="panel p-red">
-        <div class="ph">
-          <div class="picon">!</div>
-          <div class="ptitle">Urgent</div>
-          <div class="pcnt">3</div>
-        </div>
-        <div class="elist" id="p-urgent"></div>
-      </div>
-      <div class="panel p-blu">
-        <div class="ph">
-          <div class="picon">◎</div>
-          <div class="ptitle">Standard Priority</div>
-          <div class="pcnt">3</div>
-        </div>
-        <div class="elist" id="p-standard"></div>
-      </div>
-    </div>
-
-    <!-- Charts -->
-    <div class="chrow">
-      <div class="ccard">
-        <div class="ctitle">Email Categories</div>
-        <div class="csub">Today's breakdown by type</div>
-        <div class="cwrap donut"><canvas id="catChart"></canvas></div>
-        <div class="cleg" id="catLeg"></div>
-      </div>
-      <div class="ccard">
-        <div class="ctitle">Volume Trend</div>
-        <div class="csub">Emails received — last 7 days</div>
-        <div class="cwrap line"><canvas id="volChart"></canvas></div>
-      </div>
-      <div class="ccard">
-        <div class="ctitle">Time Saved This Week (minutes)</div>
-        <div class="csub">AI time savings vs manual handling — last 7 days</div>
-        <div class="cwrap" style="position:relative"><canvas id="timeSavedChart" style="max-height:215px"></canvas></div>
-      </div>
-    </div>
-
-    <!-- Charts Row 2: responseTimeChart + volCatChart + satisfactionChart -->
-    <div class="chrow" style="grid-template-columns:1fr 1fr 1fr">
-
-      <!-- Chart: Response Time Before vs With PropMind -->
-      <div class="ccard">
-        <div class="ctitle">Response Time: Before vs With PropMind</div>
-        <div class="csub">Average response time in minutes — Mon to Sun</div>
-        <div class="cwrap line"><canvas id="responseTimeChart" style="max-height:215px"></canvas></div>
-        <div class="cleg" style="flex-direction:row;gap:18px;justify-content:center;margin-top:14px">
-          <div class="crow"><div class="cdot" style="background:#f97316"></div><div class="clbl">Before PropMind</div></div>
-          <div class="crow"><div class="cdot" style="background:#10b981"></div><div class="clbl">With PropMind</div></div>
+    <!-- Unified Email List -->
+    <div class="elist-card">
+      <div class="elist-hdr">
+        <div class="elist-hdr-left">
+          <span class="elist-title">All Emails</span>
+          <span class="elist-cnt" id="list-cnt">—</span>
         </div>
       </div>
-
-      <!-- Chart: Email Volume by Category (donut) -->
-      <div class="ccard">
-        <div class="ctitle">Email Volume by Category</div>
-        <div class="csub">Percentage breakdown across all categories</div>
-        <div class="cwrap donut"><canvas id="volCatChart"></canvas></div>
-        <div class="cleg" id="volCatLeg"></div>
+      <div class="elist-cols">
+        <div class="col-dot"></div>
+        <div class="col-av"></div>
+        <div class="col-snd">Sender</div>
+        <div class="col-prop">Property</div>
+        <div class="col-subj">Subject</div>
+        <div class="col-badge">Category</div>
+        <div class="col-time">Time</div>
       </div>
-
-      <!-- Chart: Tenant Satisfaction -->
-      <div class="ccard">
-        <div class="ctitle">Tenant Satisfaction</div>
-        <div class="csub">Weekly satisfaction score (out of 10)</div>
-        <div class="cwrap line"><canvas id="satisfactionChart" style="max-height:215px"></canvas></div>
-      </div>
-
+      <div id="email-list"></div>
     </div>
 
   </div>
+
+  <!-- ── Analytics View ── -->
+  <div id="view-analytics" class="view" style="display:none">
+    <div class="coming-soon">
+      <div class="cs-icon">📊</div>
+      <div class="cs-title">Analytics</div>
+      <div class="cs-sub">Coming soon — full performance reporting and trends.</div>
+    </div>
+  </div>
+
 </main>
 
 <!-- Overlay -->
@@ -537,15 +472,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 </aside>
 
 <script>
-/* ═══ DATA ═══ */
+/* ─── DATA ─── */
 const EM = [
-  // Panel: draft
   {id:0,panel:'draft',snd:'Sarah Chen',ini:'SC',av:'#7c3aed',
    prop:'12 Maple St, Brisbane',unit:'Unit 4',
    subj:'Air conditioning not working — day 3',
    prev:"Hi, I'm writing to report the air conditioning unit has completely stopped working…",
-   time:'9:14 AM',cat:'maintenance',urg:false,
-   status:'Draft Ready',sc:'ds-g',
+   time:'9:14 AM',cat:'maintenance',urg:false,status:'Draft Ready',sc:'ds-g',
    email:`Hi,
 
 I'm writing to report that the air conditioning unit in my apartment at Unit 4/12 Maple Street has completely stopped working. It's been three days now and with the current heatwave (37°C today), the apartment is absolutely unbearable. I have a young child at home and we simply cannot cope without it.
@@ -577,8 +510,7 @@ T: (07) 3123 4567 | E: management@propmind.com.au`,
    prop:'88 Park Ave, Sydney',unit:'Unit 2',
    subj:'Lease renewal — enquiry about new terms',
    prev:"Hi, my current lease expires 31 May and I'd like to discuss renewing. Could you let me know…",
-   time:'10:02 AM',cat:'lease',urg:false,
-   status:'Draft Ready',sc:'ds-g',
+   time:'10:02 AM',cat:'lease',urg:false,status:'Draft Ready',sc:'ds-g',
    email:`Hi there,
 
 My name is Michael Torres and I'm a tenant at Unit 2/88 Park Avenue, Sydney. My current fixed-term lease expires on 31 May 2025 and I'd like to discuss renewing it.
@@ -619,8 +551,7 @@ T: (02) 9123 4567 | E: sydney@propmind.com.au`,
    prop:'45 River Drive, Gold Coast',unit:'',
    subj:'Lost building access swipe card',
    prev:"Hi, I've misplaced my building access card. Could you please arrange a replacement…",
-   time:'11:33 AM',cat:'other',urg:false,
-   status:'Draft Ready',sc:'ds-g',
+   time:'11:33 AM',cat:'other',urg:false,status:'Draft Ready',sc:'ds-g',
    email:`Hi,
 
 I've unfortunately misplaced my building access swipe card for 45 River Drive. I think I may have left it at the office last Thursday but it hasn't turned up.
@@ -648,13 +579,11 @@ PropMind Property Management — Gold Coast
 T: (07) 5556 7890 | E: goldcoast@propmind.com.au`,
    conf:97},
 
-  // Panel: review
   {id:3,panel:'review',snd:'David Kim',ini:'DK',av:'#b45309',
    prop:'33 Ocean View Dr, Bondi',unit:'Unit 7',
    subj:'Formal complaint — excessive noise from Unit 6',
    prev:"I am writing to lodge a formal complaint regarding my neighbour in Unit 6 who has been hosting…",
-   time:'8:47 AM',cat:'complaint',urg:false,
-   status:'Needs Review',sc:'ds-a',
+   time:'8:47 AM',cat:'complaint',urg:false,status:'Needs Review',sc:'ds-a',
    email:`Dear Property Manager,
 
 I am writing to lodge a formal complaint regarding the tenant in Unit 6/33 Ocean View Drive. Over the past three weeks they have been hosting loud parties on Thursday, Friday and Saturday nights that run well past 2am. Despite me knocking on their door twice to ask them to keep the noise down, the behaviour has continued.
@@ -686,8 +615,7 @@ AI confidence: 61% — escalation language and legal implications require human 
    prop:'156 George St, Melbourne',unit:'',
    subj:'Bond refund dispute — unfair damage assessment',
    prev:"I vacated the property 3 weeks ago and am disputing the damage deductions from my bond assessment…",
-   time:'9:55 AM',cat:'payment',urg:false,
-   status:'Needs Review',sc:'ds-a',
+   time:'9:55 AM',cat:'payment',urg:false,status:'Needs Review',sc:'ds-a',
    email:`Dear Manager,
 
 I vacated 156 George Street on 2 April 2025 and have received the final bond assessment which I am formally disputing.
@@ -720,8 +648,7 @@ AI confidence: 58% — legal implications require human sign-off before respondi
    prop:'8 Harbour St, Brisbane',unit:'Unit 22',
    subj:'Notice of intention to pursue legal action — mould',
    prev:"I write on behalf of my client Robert Hughes to formally put you on notice of his intention…",
-   time:'7:22 AM',cat:'complaint',urg:true,
-   status:'Needs Review',sc:'ds-a',
+   time:'7:22 AM',cat:'complaint',urg:true,status:'Needs Review',sc:'ds-a',
    email:`Dear Sir/Madam,
 
 I write on behalf of my client, Mr Robert Hughes, tenant at Unit 22/8 Harbour Street, Brisbane, to formally put you on notice of his intention to pursue legal action.
@@ -749,13 +676,11 @@ Required actions (today):
 AI confidence: 12% — solicitor correspondence requires direct human response only.`,
    conf:12},
 
-  // Panel: urgent
   {id:6,panel:'urgent',snd:'Lisa Martinez',ini:'LM',av:'#dc2626',
    prop:'44 Creek Rd, Toowoomba',unit:'Unit 1',
    subj:'URGENT: Active water leak — ceiling flooding',
    prev:"Water is actively pouring through my ceiling. The floor is flooded and water is near the power points…",
-   time:'8:03 AM',cat:'maintenance',urg:true,
-   status:'Urgent',sc:'ds-r',
+   time:'8:03 AM',cat:'maintenance',urg:true,status:'Urgent',sc:'ds-r',
    email:`THIS IS URGENT — PLEASE RESPOND IMMEDIATELY
 
 There is water actively pouring through my ceiling from the apartment above. The flooding started about 20 minutes ago and water is coming in near the kitchen and the hallway light fitting.
@@ -787,8 +712,7 @@ This response has been pre-approved for emergency dispatch. Call tenant first.`,
    prop:'67 Palm Court, Cairns',unit:'',
    subj:'Withholding rent — 6 weeks without repairs',
    prev:"I am formally informing you I will withhold my rent due Friday until three essential repairs are completed…",
-   time:'8:51 AM',cat:'payment',urg:true,
-   status:'Urgent',sc:'ds-r',
+   time:'8:51 AM',cat:'payment',urg:true,status:'Urgent',sc:'ds-r',
    email:`Dear Property Manager,
 
 I am writing to formally inform you that I will be withholding my weekly rent payment due this Friday (27 April) until the following repairs are completed, which I first reported on 14 March 2025 — now 6 weeks ago:
@@ -822,8 +746,7 @@ AI confidence: 72% — rent withholding/QCAT risk requires human sign-off.`,
    prop:'5 Valley Rd, Ipswich',unit:'Unit 9',
    subj:'Smoke alarm beeping all night — safety issue',
    prev:"The smoke alarm in my bedroom has been beeping every 30 seconds for 14 hours. I haven't slept…",
-   time:'6:14 AM',cat:'maintenance',urg:true,
-   status:'Urgent',sc:'ds-r',
+   time:'6:14 AM',cat:'maintenance',urg:true,status:'Urgent',sc:'ds-r',
    email:`Hi,
 
 The smoke alarm in my bedroom has been beeping every 30 seconds for the past 14 hours — since 4pm yesterday. I believe it needs a new battery but it is ceiling-mounted and I don't have a ladder to reach it.
@@ -850,13 +773,11 @@ PropMind Property Management
 T: (07) 3123 4567 | E: management@propmind.com.au`,
    conf:93},
 
-  // Panel: standard
   {id:9,panel:'standard',snd:'James Cooper',ini:'JC',av:'#1d4ed8',
    prop:'18 Elm Street, Adelaide',unit:'Unit 3',
    subj:'Routine inspection — can we get a tighter time window?',
    prev:"Hi, I received an inspection notice for 8 May with a 9am–2pm window. Could you narrow it down a bit…",
-   time:'10:44 AM',cat:'inspection',urg:false,
-   status:'Draft Ready',sc:'ds-g',
+   time:'10:44 AM',cat:'inspection',urg:false,status:'Draft Ready',sc:'ds-g',
    email:`Hi,
 
 I received a notice for a routine property inspection on Thursday 8 May 2025. The notice states between 9am and 2pm but that's quite a wide window — I'm working from home that day and would appreciate a more specific time if possible.
@@ -882,8 +803,7 @@ T: (08) 8123 4567`,
    prop:'90 Queen St Apts, Melbourne',unit:'Unit 12',
    subj:'Rental receipts needed for tax return',
    prev:"Hi, could you send me rental payment receipts for the full financial year July 2024–June 2025 for my accountant…",
-   time:'11:15 AM',cat:'payment',urg:false,
-   status:'Draft Ready',sc:'ds-g',
+   time:'11:15 AM',cat:'payment',urg:false,status:'Draft Ready',sc:'ds-g',
    email:`Hi,
 
 It's coming up to the end of the financial year and my accountant needs formal rental payment receipts covering 1 July 2024 to 30 June 2025 for my tax return.
@@ -915,8 +835,7 @@ T: (03) 9123 4567 | E: melbourne@propmind.com.au`,
    prop:'200 Main Road, Perth',unit:'Unit 15',
    subj:'Pet approval application — miniature dachshund',
    prev:"Hi, I'd like to apply for permission to keep a small dog. She is a 4kg miniature dachshund, desexed…",
-   time:'12:05 PM',cat:'lease',urg:false,
-   status:'Draft Ready',sc:'ds-g',
+   time:'12:05 PM',cat:'lease',urg:false,status:'Draft Ready',sc:'ds-g',
    email:`Hi,
 
 I'd like to apply for permission to keep a small dog at Unit 15/200 Main Road.
@@ -950,52 +869,70 @@ T: (08) 9123 4567 | E: perth@propmind.com.au`,
    conf:96},
 ];
 
-/* ═══ RENDER CARDS ═══ */
-const PANELS = {draft:'p-draft',review:'p-review',urgent:'p-urgent',standard:'p-standard'};
+/* ─── LOOKUPS ─── */
 const CCLASS = {maintenance:'cm',lease:'cl',payment:'cp',complaint:'cc',inspection:'ci',other:'co'};
 const CLABEL = {maintenance:'Maintenance',lease:'Lease',payment:'Payment',complaint:'Complaint',inspection:'Inspection',other:'General'};
 
-EM.forEach(e => {
-  const dot = e.urg ? '<div class="pdot r"></div>'
-    : e.panel==='review' ? '<div class="pdot a"></div>'
-    : e.panel==='urgent' ? '<div class="pdot r"></div>'
-    : '<div class="pdot g"></div>';
-  const loc = (e.unit ? e.unit+' · ':'') + e.prop.split(',')[0];
-  const html = `
-    <div class="ecard" id="ec${e.id}" onclick="openDr(${e.id})">
-      <div class="eav" style="background:${e.av}">${e.ini}</div>
-      <div class="ebody">
-        <div class="etop">
-          <div class="esndr">${e.snd}</div>
-          <div class="etime">${e.time}</div>
-        </div>
-        <div class="esubj">${e.subj}</div>
-        <div class="eprev">${e.prev}</div>
-        <div class="emeta">
-          ${dot}
-          <span class="cbadge ${CCLASS[e.cat]}">${CLABEL[e.cat]}</span>
-          <span class="propbadge">
-            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-            ${loc}
-          </span>
-        </div>
-      </div>
-    </div>`;
-  document.getElementById(PANELS[e.panel]).insertAdjacentHTML('beforeend', html);
-});
+function urgScore(e) {
+  if (e.urg && e.panel === 'urgent') return 0;
+  if (e.panel === 'urgent') return 1;
+  if (e.panel === 'review') return 2;
+  if (e.panel === 'draft') return 3;
+  return 4;
+}
 
-/* ═══ DRAWER ═══ */
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ─── BUILD ROW HTML ─── */
+function buildRow(e) {
+  const uc = (e.urg || e.panel==='urgent') ? 'u-red'
+    : e.panel==='review' ? 'u-amb' : 'u-grn';
+  const prop = (e.unit ? e.unit+' · ':'') + e.prop.split(',')[0];
+  return `<div class="erow" id="ec${e.id}" onclick="openDr(${e.id})">
+    <div class="urg-dot ${uc}"></div>
+    <div class="eav" style="background:${e.av}">${esc(e.ini)}</div>
+    <div class="ecol-snd">${esc(e.snd)}</div>
+    <div class="ecol-prop">${esc(prop)}</div>
+    <div class="ecol-subj">${esc(e.subj)}</div>
+    <span class="cbadge ${CCLASS[e.cat]||'co'}">${CLABEL[e.cat]||'General'}</span>
+    <div class="ecol-time">${esc(e.time)}</div>
+  </div>`;
+}
+
+/* ─── INITIAL RENDER ─── */
+function renderList() {
+  const sorted = [...EM].sort((a,b) => urgScore(a) - urgScore(b));
+  document.getElementById('email-list').innerHTML = sorted.map(buildRow).join('');
+  updateStats();
+}
+
+function updateStats() {
+  const pending = EM.filter(e => e.urg || e.panel==='urgent' || e.panel==='review').length;
+  document.getElementById('stat-pending').textContent = pending;
+  document.getElementById('list-cnt').textContent = EM.length;
+}
+
+renderList();
+
+/* ─── HEADER DATE ─── */
+document.getElementById('hdr-date').textContent =
+  new Date().toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long',year:'numeric'})
+  + ' · All 18 properties';
+
+/* ─── DRAWER ─── */
 let curId = null, curTab = 'email';
 
 function openDr(id) {
   const e = EM.find(x => x.id === id);
   if (!e) return;
   curId = id; curTab = 'email';
-  document.querySelectorAll('.ecard').forEach(c => c.classList.remove('active'));
-  const card = document.getElementById('ec'+id);
-  if (card) { card.classList.add('active'); card.scrollIntoView({block:'nearest'}); }
+  document.querySelectorAll('.erow').forEach(r => r.classList.remove('active'));
+  const row = document.getElementById('ec'+id);
+  if (row) { row.classList.add('active'); row.scrollIntoView({block:'nearest'}); }
   document.getElementById('dr-subj').textContent = e.subj;
-  document.getElementById('dr-meta').textContent = (e.unit ? e.unit+' · ':'')+e.prop+' · '+e.time;
+  document.getElementById('dr-meta').textContent = (e.unit?e.unit+' · ':'')+e.prop+' · '+e.time;
   const st = document.getElementById('dr-status');
   st.textContent = e.status; st.className = 'drstatus '+e.sc;
   document.getElementById('t-email').classList.add('active');
@@ -1008,7 +945,7 @@ function openDr(id) {
 function closeDrawer() {
   document.getElementById('drawer').classList.remove('open');
   document.getElementById('overlay').classList.remove('open');
-  document.querySelectorAll('.ecard').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.erow').forEach(r => r.classList.remove('active'));
   curId = null;
 }
 
@@ -1025,15 +962,13 @@ function renderDrTab(t) {
   const body = document.getElementById('dr-body');
   const info = `<div class="einforow">
     <div class="einfoav" style="background:${e.av}">${e.ini}</div>
-    <div><div class="einfoname">${e.snd}</div>
-    <div class="einfoprop">${(e.unit?e.unit+' · ':'')}${e.prop}</div></div>
-    <div class="einfotime">${e.time}</div></div>`;
+    <div><div class="einfoname">${esc(e.snd)}</div>
+    <div class="einfoprop">${esc((e.unit?e.unit+' · ':'')+e.prop)}</div></div>
+    <div class="einfotime">${esc(e.time)}</div></div>`;
   if (t === 'email') {
     body.innerHTML = info + `<div class="ebox"><p>${esc(e.email)}</p></div>`;
   } else {
-    const isFlagged = e.draft.startsWith('⚠') || e.draft.startsWith('🚨') || e.draft.startsWith('🔴');
-    const boxStyle = isFlagged ? 'border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.04)' : '';
-    const txtColor = isFlagged ? 'color:var(--amb)' : '';
+    const flagged = e.draft.startsWith('⚠')||e.draft.startsWith('🚨')||e.draft.startsWith('🔴');
     body.innerHTML = info +
       `<div class="aihdr"><div class="aitxt">AI Generated Response</div><div class="aibdg">PropMind AI</div></div>
       <div class="confrow">
@@ -1041,12 +976,10 @@ function renderDrTab(t) {
         <div class="confbar"><div class="confill" style="width:${e.conf}%"></div></div>
         <div class="confpct">${e.conf}%</div>
       </div>
-      <div class="ebox" style="${boxStyle}"><p style="${txtColor}">${esc(e.draft)}</p></div>`;
+      <div class="ebox" style="${flagged?'border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.04)':''}">
+        <p style="${flagged?'color:var(--amb)':''}">${esc(e.draft)}</p>
+      </div>`;
   }
-}
-
-function esc(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function sendDraft() {
@@ -1056,8 +989,6 @@ function sendDraft() {
   btn.style.cssText = 'background:var(--grn);box-shadow:0 3px 10px var(--grnG)';
   setTimeout(() => { btn.innerHTML = orig; btn.style.cssText = ''; }, 2500);
 }
-
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 
 function editDraft() {
   switchTab('draft');
@@ -1084,311 +1015,83 @@ function assignHuman() {
   btn.style.color = 'var(--amb)';
   btn.style.borderColor = 'var(--amb)';
   const st = document.getElementById('dr-status');
-  st.textContent = 'Needs Review';
-  st.className = 'drstatus ds-a';
+  st.textContent = 'Needs Review'; st.className = 'drstatus ds-a';
   setTimeout(() => { btn.textContent = orig; btn.style.color = ''; btn.style.borderColor = ''; }, 2500);
 }
 
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+/* ─── NAV VIEW SWITCHING ─── */
 function setNav(el) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   el.classList.add('active');
+  const view = el.dataset.view || 'dashboard';
+  document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+  const target = document.getElementById('view-' + view);
+  if (target) target.style.display = '';
 }
 
-/* ═══ CHARTS ═══ */
-Chart.defaults.color = '#94a3b8';
-Chart.defaults.borderColor = 'rgba(30,45,69,.7)';
-Chart.defaults.font.family = "-apple-system,'Inter','Segoe UI',sans-serif";
-Chart.defaults.font.size = 11;
+/* ─── DEMO FEED POLLING ─── */
+const seenFeedIds = new Set(EM.map(e => String(e.id)));
+let _nextId = 100;
 
-// Category donut
-const catL = ['Maintenance','Lease','Payments','Complaints','Inspections','General'];
-const catD = [54, 31, 21, 17, 13, 6];
-const catC = ['#3b82f6','#8b5cf6','#10b981','#ef4444','#f59e0b','#06b6d4'];
+async function pollDemoFeed() {
+  try {
+    const res = await fetch('/data/demo_feed.json?_=' + Date.now());
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!Array.isArray(data.emails)) return;
+    data.emails
+      .filter(raw => !seenFeedIds.has(String(raw.id)))
+      .forEach(injectDemoEmail);
+  } catch (_) {}
+}
 
-new Chart(document.getElementById('catChart'), {
-  type: 'doughnut',
-  data: {
-    labels: catL,
-    datasets: [{
-      data: catD,
-      backgroundColor: catC.map(c => c+'bb'),
-      borderColor: catC,
-      borderWidth: 2,
-      hoverOffset: 8,
-    }]
-  },
-  options: {
-    cutout: '68%',
-    plugins: { legend: { display: false },
-      tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw}` } } },
-    animation: { animateRotate: true, duration: 1000 }
-  }
-});
+function injectDemoEmail(raw) {
+  seenFeedIds.add(String(raw.id));
+  const e = {
+    id: _nextId++,
+    panel: raw.urgent ? 'urgent' : 'standard',
+    snd: raw.sender,
+    ini: raw.initials,
+    av: raw.avatar_color || '#3b82f6',
+    prop: raw.property,
+    unit: raw.unit || '',
+    subj: raw.subject,
+    prev: raw.preview || '',
+    time: raw.time,
+    cat: raw.category || 'other',
+    urg: !!raw.urgent,
+    status: raw.status || 'Draft Ready',
+    sc: raw.urgent ? 'ds-r' : (raw.status === 'Needs Review' ? 'ds-a' : 'ds-g'),
+    email: raw.email_body || '(no email body)',
+    draft: raw.ai_draft || '(no AI draft)',
+    conf: raw.confidence != null ? raw.confidence : 85,
+  };
+  EM.unshift(e);
 
-// Build category legend
-const legEl = document.getElementById('catLeg');
-catL.forEach((l, i) => {
-  legEl.insertAdjacentHTML('beforeend',
-    `<div class="crow"><div class="cdot" style="background:${catC[i]}"></div>
-     <div class="clbl">${l}</div><div class="cval">${catD[i]}</div></div>`);
-});
+  const uc = (e.urg || e.panel==='urgent') ? 'u-red'
+    : e.panel==='review' ? 'u-amb' : 'u-grn';
+  const prop = (e.unit ? e.unit+' · ':'') + e.prop.split(',')[0];
+  const rowHtml = `<div class="erow new-anim" id="ec${e.id}" onclick="openDr(${e.id})">
+    <div class="urg-dot ${uc}"></div>
+    <div class="eav" style="background:${e.av}">${esc(e.ini)}</div>
+    <div class="ecol-snd">${esc(e.snd)}</div>
+    <div class="ecol-prop">${esc(prop)}</div>
+    <div class="ecol-subj">${esc(e.subj)}</div>
+    <span class="cbadge ${CCLASS[e.cat]||'co'}">${CLABEL[e.cat]||'General'}</span>
+    <div class="ecol-time">${esc(e.time)}</div>
+  </div>`;
 
-// Volume line
-new Chart(document.getElementById('volChart'), {
-  type: 'line',
-  data: {
-    labels: ['19 Apr','20 Apr','21 Apr','22 Apr','23 Apr','24 Apr','25 Apr'],
-    datasets: [
-      {
-        label: 'Total Emails',
-        data: [98,45,38,112,87,134,142],
-        borderColor: '#3b82f6',
-        backgroundColor: 'rgba(59,130,246,.07)',
-        borderWidth: 2.5,
-        pointBackgroundColor: '#3b82f6',
-        pointBorderColor: '#0d1630',
-        pointRadius: 4, pointHoverRadius: 6,
-        tension: 0.4, fill: true,
-      },
-      {
-        label: 'AI Handled',
-        data: [85,39,33,97,76,117,124],
-        borderColor: '#8b5cf6',
-        backgroundColor: 'rgba(139,92,246,.05)',
-        borderWidth: 2,
-        pointBackgroundColor: '#8b5cf6',
-        pointBorderColor: '#0d1630',
-        pointRadius: 3, pointHoverRadius: 5,
-        tension: 0.4, fill: true,
-        borderDash: [5,3],
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    interaction: { mode: 'index', intersect: false },
-    plugins: {
-      legend: { position: 'top',
-        labels: { boxWidth: 10, padding: 14, usePointStyle: true, pointStyle: 'circle' } }
-    },
-    scales: {
-      x: { grid: { color: 'rgba(30,45,69,.5)' } },
-      y: { grid: { color: 'rgba(30,45,69,.5)' }, beginAtZero: true }
-    },
-    animation: { duration: 1000 }
-  }
-});
+  document.getElementById('email-list').insertAdjacentHTML('afterbegin', rowHtml);
+  updateStats();
+  document.getElementById('stat-emails').textContent =
+    parseInt(document.getElementById('stat-emails').textContent || '0') + 1;
+  const badge = document.getElementById('inbox-badge');
+  if (badge) badge.textContent = parseInt(badge.textContent || '0') + 1;
+}
 
-// Time Saved This Week bar chart
-new Chart(document.getElementById('timeSavedChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-    datasets: [{
-      label: 'Minutes Saved',
-      data: [45, 62, 58, 71, 83, 67, 90],
-      backgroundColor: [
-        'rgba(59,130,246,.7)',
-        'rgba(59,130,246,.7)',
-        'rgba(59,130,246,.7)',
-        'rgba(59,130,246,.7)',
-        'rgba(139,92,246,.8)',
-        'rgba(59,130,246,.7)',
-        'rgba(16,185,129,.85)',
-      ],
-      borderColor: [
-        '#3b82f6','#3b82f6','#3b82f6','#3b82f6','#8b5cf6','#3b82f6','#10b981',
-      ],
-      borderWidth: 2,
-      borderRadius: 6,
-      borderSkipped: false,
-      hoverBackgroundColor: 'rgba(96,165,250,.9)',
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => ` ${ctx.raw} min saved`
-        }
-      }
-    },
-    scales: {
-      x: {
-        grid: { color: 'rgba(30,45,69,.7)' },
-        ticks: { color: '#94a3b8' }
-      },
-      y: {
-        grid: { color: 'rgba(30,45,69,.7)' },
-        ticks: { color: '#94a3b8', callback: v => v + 'm' },
-        beginAtZero: true,
-        suggestedMax: 100,
-      }
-    },
-    animation: { duration: 900, easing: 'easeOutQuart' }
-  }
-});
-
-/* ═══ NEW CHART 2: Email Volume by Category (donut) ═══ */
-const volCatLabels = ['Maintenance', 'Lease Enquiries', 'Payment Issues', 'Complaints', 'General Enquiries'];
-const volCatData   = [34, 22, 18, 12, 14];
-const volCatColors = ['#3b82f6', '#8b5cf6', '#10b981', '#06b6d4', '#a78bfa'];
-
-new Chart(document.getElementById('volCatChart'), {
-  type: 'doughnut',
-  data: {
-    labels: volCatLabels,
-    datasets: [{
-      data: volCatData,
-      backgroundColor: volCatColors.map(c => c + 'bb'),
-      borderColor: volCatColors,
-      borderWidth: 2,
-      hoverOffset: 8,
-    }]
-  },
-  options: {
-    cutout: '68%',
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => ` ${ctx.label}: ${ctx.raw}%`
-        }
-      }
-    },
-    animation: { animateRotate: true, duration: 1000 }
-  }
-});
-
-// Build legend for volCatChart
-const volCatLegEl = document.getElementById('volCatLeg');
-volCatLabels.forEach((l, i) => {
-  volCatLegEl.insertAdjacentHTML('beforeend',
-    `<div class="crow"><div class="cdot" style="background:${volCatColors[i]}"></div>
-     <div class="clbl">${l}</div><div class="cval">${volCatData[i]}%</div></div>`);
-});
-/* ═══ NEW CHART: responseTimeChart — Response Time Line ═══ */
-new Chart(document.getElementById('responseTimeChart'), {
-  type: 'line',
-  data: {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'Before PropMind',
-        data: [360, 390, 345, 420, 380, 410, 355],
-        borderColor: '#f97316',
-        backgroundColor: 'rgba(249,115,22,.12)',
-        borderWidth: 2.5,
-        pointBackgroundColor: '#f97316',
-        pointBorderColor: '#0d1630',
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        fill: true,
-        tension: 0.4,
-      },
-      {
-        label: 'With PropMind',
-        data: [4.8, 5.2, 4.5, 6.1, 5.0, 4.3, 4.2],
-        borderColor: '#10b981',
-        backgroundColor: 'rgba(16,185,129,.10)',
-        borderWidth: 2.5,
-        pointBackgroundColor: '#10b981',
-        pointBorderColor: '#0d1630',
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        fill: true,
-        tension: 0.4,
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    interaction: { mode: 'index', intersect: false },
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} min`
-        }
-      }
-    },
-    scales: {
-      x: {
-        grid: { color: 'rgba(30,45,69,.7)' },
-        ticks: { color: '#94a3b8' }
-      },
-      y: {
-        grid: { color: 'rgba(30,45,69,.7)' },
-        ticks: { color: '#94a3b8', callback: v => v + ' min' },
-        beginAtZero: true,
-        suggestedMax: 450,
-        title: {
-          display: true,
-          text: 'Minutes',
-          color: '#475569',
-          font: { size: 10 }
-        }
-      }
-    },
-    animation: { duration: 1100, easing: 'easeOutQuart' }
-  }
-});
-
-/* ═══ NEW CHART: satisfactionChart — Tenant Satisfaction ═══ */
-new Chart(document.getElementById('satisfactionChart'), {
-  type: 'line',
-  data: {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'Satisfaction Score',
-        data: [7.4, 7.8, 8.1, 7.9, 8.5, 8.7, 9.1],
-        borderColor: '#8b5cf6',
-        backgroundColor: 'rgba(139,92,246,.12)',
-        borderWidth: 2.5,
-        pointBackgroundColor: '#8b5cf6',
-        pointBorderColor: '#0d1630',
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        fill: true,
-        tension: 0.4,
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => ` Score: ${ctx.raw} / 10`
-        }
-      }
-    },
-    scales: {
-      x: {
-        grid: { color: 'rgba(30,45,69,.7)' },
-        ticks: { color: '#94a3b8' }
-      },
-      y: {
-        grid: { color: 'rgba(30,45,69,.7)' },
-        ticks: { color: '#94a3b8', callback: v => v + '/10' },
-        min: 5,
-        max: 10,
-        title: {
-          display: true,
-          text: 'Score / 10',
-          color: '#475569',
-          font: { size: 10 }
-        }
-      }
-    },
-    animation: { duration: 1000, easing: 'easeOutQuart' }
-  }
-});
-
+setInterval(pollDemoFeed, 30000);
 </script>
 </body>
 </html>

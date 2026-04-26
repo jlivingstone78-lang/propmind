@@ -1,0 +1,21 @@
+{
+  "emails": [
+    {
+      "id": "demo-001",
+      "sender": "Priya Sharma",
+      "initials": "PS",
+      "avatar_color": "#7c3aed",
+      "property": "14 Sandgate Rd, Albion",
+      "unit": "Unit 6",
+      "subject": "Hot water system failure — no hot water since yesterday",
+      "preview": "Hi, our hot water system stopped working yesterday afternoon. We have two young children and really need this fixed urgently…",
+      "time": "2:41 PM",
+      "category": "maintenance",
+      "urgent": true,
+      "status": "Urgent",
+      "email_body": "Hi,\n\nOur hot water system at Unit 6/14 Sandgate Road stopped working yesterday afternoon around 3pm. We have two young children (ages 2 and 4) at home and we've now been without hot water for over 24 hours.\n\nWe've checked the circuit breaker and it hasn't tripped. The unit appears to be completely dead — no lights, no sound.\n\nCould someone please attend as a priority today? I'm home all day.\n\nKind regards,\nPriya Sharma\nUnit 6/14 Sandgate Road, Albion QLD 4010\nM: 0412 999 888",
+      "ai_draft": "Dear Priya,\n\nThank you for letting us know — no hot water with two young children at home is absolutely a priority and we're treating it as such.\n\nI've logged an urgent maintenance request (Ref: MNT-2854) and our preferred plumbing contractor, AquaFix, has been notified. They will call you within the next hour to confirm an attendance time — we expect same-day attendance today.\n\nIn the meantime, if you need temporary access to warm water please let us know and we'll arrange alternatives.\n\nWe sincerely apologise for the disruption and will keep you updated.\n\nKind regards,\nPropMind Property Management\nT: (07) 3123 4567 | E: management@propmind.com.au",
+      "confidence": 96
+    }
+  ]
+}
