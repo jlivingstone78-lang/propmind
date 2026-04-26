@@ -316,6 +316,128 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .btn-g{background:transparent;color:var(--t2);border:1px solid var(--border);
   margin-left:auto}
 .btn-g:hover{color:var(--t1);border-color:var(--border2)}
+
+/* ── View Header ── */
+.view-hdr{display:flex;align-items:flex-start;justify-content:space-between;
+  gap:14px;flex-wrap:wrap}
+.view-hdr h2{font-size:19px;font-weight:800;letter-spacing:-.4px}
+.view-hdr-sub{font-size:12px;color:var(--t3);margin-top:3px}
+
+/* ── Filter Tabs ── */
+.ftabs{display:flex;gap:5px;flex-wrap:wrap}
+.ftab{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:7px;
+  font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;user-select:none;
+  transition:all .15s;border:1px solid var(--border);background:var(--bg2)}
+.ftab:hover{background:var(--bg3);color:var(--t1)}
+.ftab.active{background:rgba(59,130,246,.15);color:var(--bluL);border-color:rgba(59,130,246,.3)}
+.ftab-cnt{font-size:10px;font-weight:700;background:var(--bg3);padding:1px 6px;border-radius:5px}
+.ftab.active .ftab-cnt{background:rgba(59,130,246,.25);color:var(--bluL)}
+
+/* ── Batch bar (Drafts) ── */
+.batch-bar{display:flex;align-items:center;gap:12px;padding:10px 16px;
+  background:rgba(59,130,246,.07);border-bottom:1px solid rgba(59,130,246,.18)}
+.batch-info{flex:1;font-size:12px;color:var(--bluL)}
+
+/* ── Properties ── */
+.prop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.prop-card{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:16px 18px;transition:border-color .2s,transform .18s;cursor:pointer;
+  position:relative;overflow:hidden}
+.prop-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.prop-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px 0 0 2px}
+.prop-card.st-active::before{background:var(--grn)}
+.prop-card.st-maintenance::before{background:var(--amb)}
+.prop-card.st-vacant::before{background:var(--t3)}
+.prop-addr{font-size:13px;font-weight:700;margin-bottom:2px}
+.prop-suburb{font-size:11.5px;color:var(--t3);margin-bottom:12px}
+.prop-stats{display:flex;gap:18px;margin-bottom:12px}
+.prop-stat-val{font-size:19px;font-weight:800;letter-spacing:-.5px}
+.prop-stat-lbl{font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--t3);
+  text-transform:uppercase;margin-top:1px}
+.prop-foot{display:flex;align-items:center;justify-content:space-between}
+.prop-last{font-size:10.5px;color:var(--t3)}
+.pbadge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px}
+.pb-active{background:rgba(16,185,129,.15);color:var(--grn)}
+.pb-maint{background:rgba(245,158,11,.15);color:var(--amb)}
+.pb-vacant{background:rgba(71,85,105,.2);color:var(--t2)}
+
+/* ── AI Rules ── */
+.rules-list{display:flex;flex-direction:column;gap:10px}
+.rule-card{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:16px 18px;display:flex;align-items:flex-start;gap:16px;transition:border-color .2s}
+.rule-card:hover{border-color:var(--border2)}
+.rule-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:17px}
+.rule-body{flex:1;min-width:0}
+.rule-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.rule-desc{font-size:12px;color:var(--t2);line-height:1.6}
+.rule-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.rtag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;
+  background:var(--bg3);color:var(--t3);border:1px solid var(--border)}
+.toggle{position:relative;width:38px;height:21px;flex-shrink:0;margin-top:3px}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.tslider{position:absolute;inset:0;background:var(--bg4);border-radius:21px;cursor:pointer;transition:background .2s}
+.tslider::before{content:'';position:absolute;width:15px;height:15px;
+  left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s}
+.toggle input:checked + .tslider{background:var(--blue)}
+.toggle input:checked + .tslider::before{transform:translateX(17px)}
+
+/* ── Integrations ── */
+.int-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.int-card{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:20px;display:flex;flex-direction:column;gap:13px;
+  transition:border-color .2s,transform .18s}
+.int-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.int-top{display:flex;align-items:center;gap:12px}
+.int-logo{width:42px;height:42px;border-radius:11px;display:flex;
+  align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.int-name{font-size:13.5px;font-weight:700}
+.int-desc{font-size:12px;color:var(--t2);line-height:1.55;flex:1}
+.int-foot{display:flex;align-items:center;justify-content:space-between}
+.int-status{font-size:10.5px;font-weight:700;display:flex;align-items:center;gap:5px}
+.is-con{color:var(--grn)}.is-dis{color:var(--t3)}.is-soon{color:var(--purL)}
+.idot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.idot-c{background:var(--grn);box-shadow:0 0 5px var(--grnG)}
+.idot-d{background:var(--t3)}.idot-s{background:var(--purp)}
+.int-btn{padding:6px 13px;border-radius:6px;font-size:11.5px;font-weight:600;
+  cursor:pointer;border:1px solid var(--border);background:var(--bg3);
+  color:var(--t1);transition:all .15s;font-family:inherit}
+.int-btn:hover:not(:disabled){background:var(--bg4)}
+.int-btn:disabled{opacity:.42;cursor:not-allowed}
+.int-btn.prim{background:linear-gradient(135deg,var(--blue),var(--purp));
+  color:#fff;border:none;box-shadow:0 2px 8px var(--bluG)}
+.int-btn.prim:hover{transform:translateY(-1px);box-shadow:0 4px 12px var(--bluG)}
+
+/* ── Settings ── */
+.settings-wrap{display:grid;grid-template-columns:210px 1fr;gap:18px;align-items:start}
+.snav{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  overflow:hidden;position:sticky;top:calc(var(--hh) + 20px)}
+.snav-item{display:flex;align-items:center;gap:9px;padding:10px 14px;
+  font-size:12.5px;font-weight:500;color:var(--t2);cursor:pointer;
+  border-left:2px solid transparent;transition:all .15s}
+.snav-item:hover{background:var(--bg2);color:var(--t1)}
+.snav-item.active{color:var(--bluL);border-left-color:var(--blue);background:rgba(59,130,246,.07)}
+.sbody{display:flex;flex-direction:column;gap:14px}
+.sct{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.sct-hdr{padding:14px 18px;border-bottom:1px solid var(--border)}
+.sct-hdr h3{font-size:13.5px;font-weight:700}
+.sct-hdr p{font-size:11.5px;color:var(--t3);margin-top:2px}
+.sct-body{padding:18px}
+.sf-row{display:flex;gap:14px;margin-bottom:14px}
+.sf-row:last-child{margin-bottom:0}
+.sf-field{flex:1;display:flex;flex-direction:column;gap:5px}
+.sf-label{font-size:10.5px;font-weight:600;letter-spacing:.5px;color:var(--t3);text-transform:uppercase}
+.sf-input{background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:8px 11px;font-size:13px;color:var(--t1);outline:none;
+  transition:border-color .15s;font-family:inherit;width:100%}
+.sf-input:focus{border-color:var(--blue)}
+.sf-input:disabled{opacity:.5;cursor:not-allowed}
+.st-row{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid var(--border)}
+.st-row:last-child{border-bottom:none}
+.st-info h4{font-size:13px;font-weight:600;margin-bottom:2px}
+.st-info p{font-size:11.5px;color:var(--t3);line-height:1.4}
+.sform-save{display:flex;justify-content:flex-end;padding-top:16px}
 </style>
 </head>
 <body>
@@ -335,20 +457,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
       Dashboard
     </div>
-    <div class="nav-item" data-view="dashboard" onclick="setNav(this)">
+    <div class="nav-item" data-view="inbox" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       Inbox
       <span class="nbadge b" id="inbox-badge">142</span>
     </div>
-    <div class="nav-item" onclick="setNav(this)">
+    <div class="nav-item" data-view="drafts" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       Drafts
-      <span class="nbadge p">23</span>
+      <span class="nbadge p" id="drafts-badge">—</span>
     </div>
-    <div class="nav-item" onclick="setNav(this)">
+    <div class="nav-item" data-view="review" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       Review Queue
-      <span class="nbadge a">19</span>
+      <span class="nbadge a" id="review-badge">—</span>
     </div>
   </nav>
 
@@ -358,16 +480,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
       Analytics
     </div>
-    <div class="nav-item" onclick="setNav(this)">
+    <div class="nav-item" data-view="properties" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       Properties
       <span class="nsub">18</span>
     </div>
-    <div class="nav-item" onclick="setNav(this)">
+    <div class="nav-item" data-view="rules" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       AI Rules
     </div>
-    <div class="nav-item" onclick="setNav(this)">
+    <div class="nav-item" data-view="integrations" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
       Integrations
     </div>
@@ -375,7 +497,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 
   <div class="hsep"></div>
   <nav class="nav">
-    <div class="nav-item" onclick="setNav(this)">
+    <div class="nav-item" data-view="settings" onclick="setNav(this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M4.93 19.07a10 10 0 010-14.14"/></svg>
       Settings
     </div>
@@ -526,6 +648,242 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
       </div>
     </div>
 
+  </div>
+
+  <!-- ── Inbox View ── -->
+  <div id="view-inbox" class="view" style="display:none">
+    <div class="view-hdr">
+      <div>
+        <h2>Inbox</h2>
+        <p class="view-hdr-sub">All emails across 18 properties · sorted by most recent</p>
+      </div>
+      <div class="ftabs" id="inbox-filters">
+        <div class="ftab active" onclick="filterInbox(this,'all')">All <span class="ftab-cnt" id="inbox-cnt-all">—</span></div>
+        <div class="ftab" onclick="filterInbox(this,'urgent')">Urgent <span class="ftab-cnt" id="inbox-cnt-urgent">—</span></div>
+        <div class="ftab" onclick="filterInbox(this,'review')">Needs Review <span class="ftab-cnt" id="inbox-cnt-review">—</span></div>
+        <div class="ftab" onclick="filterInbox(this,'draft')">Draft Ready <span class="ftab-cnt" id="inbox-cnt-draft">—</span></div>
+      </div>
+    </div>
+    <div class="elist-card">
+      <div class="elist-cols">
+        <div class="col-dot"></div><div class="col-av"></div>
+        <div class="col-snd">Sender</div><div class="col-prop">Property</div>
+        <div class="col-subj">Subject</div><div class="col-badge">Category</div>
+        <div class="col-time">Time</div>
+      </div>
+      <div id="inbox-list"></div>
+    </div>
+  </div>
+
+  <!-- ── Drafts View ── -->
+  <div id="view-drafts" class="view" style="display:none">
+    <div class="view-hdr">
+      <div>
+        <h2>Drafts</h2>
+        <p class="view-hdr-sub">AI-generated responses ready to review and send</p>
+      </div>
+      <button id="send-all-btn" class="btn btn-p" onclick="sendAllDrafts()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;vertical-align:-1px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send All Drafts
+      </button>
+    </div>
+    <div class="elist-card">
+      <div class="batch-bar">
+        <span class="batch-info" id="drafts-batch-info">—</span>
+        <span style="font-size:11px;color:var(--t3)">Click any email to review before sending</span>
+      </div>
+      <div class="elist-cols">
+        <div class="col-dot"></div><div class="col-av"></div>
+        <div class="col-snd">Sender</div><div class="col-prop">Property</div>
+        <div class="col-subj">Subject</div><div class="col-badge">Category</div>
+        <div class="col-time">Time</div>
+      </div>
+      <div id="drafts-list"></div>
+    </div>
+  </div>
+
+  <!-- ── Review Queue View ── -->
+  <div id="view-review" class="view" style="display:none">
+    <div class="view-hdr">
+      <div>
+        <h2>Review Queue</h2>
+        <p class="view-hdr-sub">Escalated emails requiring human review — sorted by urgency</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--amb)">
+        <div class="urg-dot u-red" style="flex-shrink:0"></div> Urgent action required
+      </div>
+    </div>
+    <div class="elist-card">
+      <div class="elist-cols">
+        <div class="col-dot"></div><div class="col-av"></div>
+        <div class="col-snd">Sender</div><div class="col-prop">Property</div>
+        <div class="col-subj">Subject</div><div class="col-badge">Category</div>
+        <div class="col-time">Time</div>
+      </div>
+      <div id="review-list"></div>
+    </div>
+  </div>
+
+  <!-- ── Properties View ── -->
+  <div id="view-properties" class="view" style="display:none">
+    <div class="view-hdr">
+      <div>
+        <h2>Properties</h2>
+        <p class="view-hdr-sub">18 properties across your portfolio</p>
+      </div>
+      <div class="ftabs">
+        <div class="ftab active">All <span class="ftab-cnt">18</span></div>
+        <div class="ftab">Active <span class="ftab-cnt">16</span></div>
+        <div class="ftab">Vacant <span class="ftab-cnt">2</span></div>
+        <div class="ftab">Maintenance <span class="ftab-cnt">1</span></div>
+      </div>
+    </div>
+    <div class="prop-grid" id="prop-grid"></div>
+  </div>
+
+  <!-- ── AI Rules View ── -->
+  <div id="view-rules" class="view" style="display:none">
+    <div class="view-hdr">
+      <div>
+        <h2>AI Rules</h2>
+        <p class="view-hdr-sub">Configure how PropMind categorises and responds to emails</p>
+      </div>
+      <button class="btn btn-s">+ Add Rule</button>
+    </div>
+    <div class="rules-list" id="rules-container"></div>
+  </div>
+
+  <!-- ── Integrations View ── -->
+  <div id="view-integrations" class="view" style="display:none">
+    <div class="view-hdr">
+      <div>
+        <h2>Integrations</h2>
+        <p class="view-hdr-sub">Connect PropMind to your existing tools and platforms</p>
+      </div>
+    </div>
+    <div class="int-grid" id="int-grid"></div>
+  </div>
+
+  <!-- ── Settings View ── -->
+  <div id="view-settings" class="view" style="display:none">
+    <div class="settings-wrap">
+      <div class="snav">
+        <div class="snav-item active" onclick="showSettingsSection(this,'profile')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile
+        </div>
+        <div class="snav-item" onclick="showSettingsSection(this,'ai')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>AI Behaviour
+        </div>
+        <div class="snav-item" onclick="showSettingsSection(this,'notifications')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Notifications
+        </div>
+        <div class="snav-item" onclick="showSettingsSection(this,'account')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Account
+        </div>
+      </div>
+      <div class="sbody">
+        <!-- Profile -->
+        <div class="sct" id="section-profile">
+          <div class="sct-hdr"><h3>Profile</h3><p>Your personal details and role information</p></div>
+          <div class="sct-body">
+            <div class="sf-row">
+              <div class="sf-field"><div class="sf-label">First Name</div><input class="sf-input" value="Joshua"></div>
+              <div class="sf-field"><div class="sf-label">Last Name</div><input class="sf-input" value="Livingstone"></div>
+            </div>
+            <div class="sf-row">
+              <div class="sf-field"><div class="sf-label">Email</div><input class="sf-input" value="jlivingstone78@gmail.com" disabled></div>
+              <div class="sf-field"><div class="sf-label">Role</div><input class="sf-input" value="Property Manager · Admin"></div>
+            </div>
+            <div class="sf-row">
+              <div class="sf-field"><div class="sf-label">Agency</div><input class="sf-input" value="PropMind Property Management"></div>
+              <div class="sf-field"><div class="sf-label">Timezone</div>
+                <select class="sf-input"><option selected>Australia/Brisbane (AEST +10)</option><option>Australia/Sydney (AEDT +11)</option><option>Australia/Perth (AWST +8)</option><option>Australia/Adelaide (ACST +9:30)</option></select>
+              </div>
+            </div>
+            <div class="sform-save"><button class="btn btn-p">Save Changes</button></div>
+          </div>
+        </div>
+        <!-- AI Behaviour -->
+        <div class="sct" id="section-ai">
+          <div class="sct-hdr"><h3>AI Behaviour</h3><p>Control how PropMind AI handles and responds to emails</p></div>
+          <div class="sct-body">
+            <div class="st-row">
+              <div class="st-info"><h4>Auto-send high-confidence drafts</h4><p>Automatically send responses where AI confidence exceeds your threshold</p></div>
+              <label class="toggle"><input type="checkbox"><span class="tslider"></span></label>
+            </div>
+            <div class="st-row">
+              <div class="st-info"><h4>Emergency SMS alerts</h4><p>Send SMS to you and property owners for urgent safety emails</p></div>
+              <label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label>
+            </div>
+            <div class="st-row">
+              <div class="st-info"><h4>Weekend processing</h4><p>Continue monitoring and responding to emails on weekends</p></div>
+              <label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label>
+            </div>
+            <div class="st-row">
+              <div class="st-info"><h4>Learn from edits</h4><p>Improve AI drafts based on changes you make before sending</p></div>
+              <label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label>
+            </div>
+            <div class="sf-row" style="margin-top:16px">
+              <div class="sf-field">
+                <div class="sf-label">Minimum confidence to auto-draft</div>
+                <select class="sf-input"><option>70% — Draft any email AI is moderately confident about</option><option selected>80% — Balanced (recommended)</option><option>90% — Only draft when highly confident</option></select>
+              </div>
+              <div class="sf-field">
+                <div class="sf-label">Default response tone</div>
+                <select class="sf-input"><option selected>Professional &amp; Warm</option><option>Formal</option><option>Concise</option><option>Empathetic</option></select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Notifications -->
+        <div class="sct" id="section-notifications">
+          <div class="sct-hdr"><h3>Notifications</h3><p>Choose when and how you are alerted</p></div>
+          <div class="sct-body">
+            <div class="st-row">
+              <div class="st-info"><h4>Urgent email alerts</h4><p>Immediate push notification when an email is flagged as urgent</p></div>
+              <label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label>
+            </div>
+            <div class="st-row">
+              <div class="st-info"><h4>Review queue alerts</h4><p>Notify when an email is added to the human review queue</p></div>
+              <label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label>
+            </div>
+            <div class="st-row">
+              <div class="st-info"><h4>Daily summary email</h4><p>Receive a daily digest of volume, time saved, and actions taken at 7am</p></div>
+              <label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label>
+            </div>
+            <div class="st-row">
+              <div class="st-info"><h4>Weekly performance report</h4><p>Detailed analytics report every Monday morning</p></div>
+              <label class="toggle"><input type="checkbox"><span class="tslider"></span></label>
+            </div>
+            <div class="st-row">
+              <div class="st-info"><h4>Draft sent confirmations</h4><p>Notify when a high-confidence draft is auto-sent on your behalf</p></div>
+              <label class="toggle"><input type="checkbox"><span class="tslider"></span></label>
+            </div>
+          </div>
+        </div>
+        <!-- Account -->
+        <div class="sct" id="section-account">
+          <div class="sct-hdr"><h3>Account</h3><p>Plan, billing, and security settings</p></div>
+          <div class="sct-body">
+            <div class="sf-row">
+              <div class="sf-field"><div class="sf-label">Current Plan</div><input class="sf-input" value="PropMind Pro — $149/mo" disabled></div>
+              <div class="sf-field"><div class="sf-label">Billing Cycle</div><input class="sf-input" value="Monthly · Next renewal 1 May 2026" disabled></div>
+            </div>
+            <div class="sf-row">
+              <div class="sf-field"><div class="sf-label">Emails Processed This Month</div><input class="sf-input" value="847 / Unlimited" disabled></div>
+              <div class="sf-field"><div class="sf-label">Team Members</div><input class="sf-input" value="1 of 5 seats used" disabled></div>
+            </div>
+            <div class="st-row" style="margin-top:8px">
+              <div class="st-info"><h4>Two-factor authentication</h4><p>Require a verification code when logging in</p></div>
+              <label class="toggle"><input type="checkbox"><span class="tslider"></span></label>
+            </div>
+            <div class="sform-save" style="gap:10px">
+              <button class="btn btn-s">Change Password</button>
+              <button class="btn btn-p">Manage Plan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </main>
@@ -1118,7 +1476,224 @@ function setNav(el) {
   const target = document.getElementById('view-' + view);
   if (target) target.style.display = '';
   if (view === 'analytics') initAnalytics();
+  if (view === 'inbox') renderInbox('all');
+  if (view === 'drafts') renderDrafts();
+  if (view === 'review') renderReview();
+  if (view === 'properties') renderProperties();
+  if (view === 'rules') renderRules();
+  if (view === 'integrations') renderIntegrations();
 }
+
+/* ─── PAGE DATA ─── */
+const PROPS = [
+  {addr:'12 Maple St',city:'Brisbane QLD 4000',units:4,emails:34,status:'maintenance',last:'2h ago'},
+  {addr:'88 Park Ave',city:'Sydney NSW 2000',units:6,emails:28,status:'active',last:'1h ago'},
+  {addr:'8 Harbour St',city:'Brisbane QLD 4000',units:24,emails:22,status:'active',last:'3h ago'},
+  {addr:'44 Creek Rd',city:'Toowoomba QLD 4350',units:1,emails:19,status:'active',last:'5h ago'},
+  {addr:'33 Ocean View Dr',city:'Bondi NSW 2026',units:8,emails:16,status:'active',last:'4h ago'},
+  {addr:'67 Palm Court',city:'Cairns QLD 4870',units:1,emails:14,status:'active',last:'6h ago'},
+  {addr:'45 River Drive',city:'Gold Coast QLD 4217',units:1,emails:12,status:'active',last:'8h ago'},
+  {addr:'5 Valley Rd',city:'Ipswich QLD 4305',units:12,emails:11,status:'active',last:'9h ago'},
+  {addr:'18 Elm Street',city:'Adelaide SA 5000',units:6,emails:9,status:'active',last:'12h ago'},
+  {addr:'90 Queen St Apts',city:'Melbourne VIC 3000',units:24,emails:9,status:'active',last:'10h ago'},
+  {addr:'200 Main Road',city:'Perth WA 6000',units:18,emails:8,status:'active',last:'1d ago'},
+  {addr:'156 George St',city:'Melbourne VIC 3000',units:1,emails:7,status:'active',last:'1d ago'},
+  {addr:'22 Sandgate Rd',city:'Albion QLD 4010',units:4,emails:6,status:'vacant',last:'2d ago'},
+  {addr:'15 Bay St',city:'Manly NSW 2095',units:1,emails:5,status:'active',last:'2d ago'},
+  {addr:'4 Parkview Tce',city:'Newmarket QLD 4051',units:1,emails:5,status:'active',last:'2d ago'},
+  {addr:'77 Victoria St',city:'Potts Point NSW 2011',units:10,emails:4,status:'vacant',last:'3d ago'},
+  {addr:'3 Marina Blvd',city:'Noosa QLD 4567',units:1,emails:3,status:'active',last:'4d ago'},
+  {addr:'55 Grange Rd',city:'Highgate Hill QLD 4101',units:1,emails:2,status:'active',last:'5d ago'},
+];
+
+const RULES = [
+  {icon:'🚨',title:'Emergency Detection',bg:'rgba(239,68,68,.12)',on:true,
+   desc:'Escalates emails containing keywords: flood, fire, gas leak, break-in, structural collapse, emergency. Tags as Urgent, notifies owner and PM by SMS within 2 minutes.',
+   tags:['Auto-Escalate','SMS Alert','Owner Notify']},
+  {icon:'⚖️',title:'Legal & Solicitor Notices',bg:'rgba(245,158,11,.12)',on:true,
+   desc:'Detects correspondence from legal firms or containing formal legal language (QCAT, VCAT, NCAT, solicitor, legal action). Blocks auto-response and flags for human-only review.',
+   tags:['Block Auto-Send','Flag Review','High Priority']},
+  {icon:'🔧',title:'Maintenance Requests',bg:'rgba(59,130,246,.12)',on:true,
+   desc:'Categorises all maintenance emails, drafts an appropriate response, creates a maintenance ticket reference number, and routes to the relevant contractor queue based on issue type.',
+   tags:['Auto-Draft','Create Ticket','Route Contractor']},
+  {icon:'📋',title:'Lease Renewal Enquiries',bg:'rgba(139,92,246,.12)',on:true,
+   desc:'Detects lease renewal requests, drafts a response with current market rental rates and available term options. Flags leases expiring within 60 days for priority follow-up.',
+   tags:['Auto-Draft','Rate Lookup','60-Day Alert']},
+  {icon:'💳',title:'Payment & Bond Disputes',bg:'rgba(16,185,129,.12)',on:true,
+   desc:'Simple payment receipt requests get auto-drafted. Bond disputes and tribunal threats (VCAT, QCAT, NCAT) are escalated to human review with a relevant evidence checklist.',
+   tags:['Auto-Draft','Escalate Disputes','Evidence Checklist']},
+  {icon:'🐾',title:'Pet Applications',bg:'rgba(6,182,212,.12)',on:true,
+   desc:'Detects pet permission requests, drafts an acknowledgement, and forwards the application to the property owner. Sends an automatic follow-up if the owner has not responded within 5 business days.',
+   tags:['Auto-Draft','Owner Forward','5-Day Follow-up']},
+  {icon:'🔍',title:'Inspection Coordination',bg:'rgba(245,158,11,.12)',on:true,
+   desc:'Processes inspection scheduling requests, checks available slots, and drafts a confirmation with a tighter time window. Sends a tenant reminder SMS 48 hours before the inspection.',
+   tags:['Auto-Draft','Schedule Check','48h Reminder']},
+  {icon:'🔇',title:'Noise & Neighbour Complaints',bg:'rgba(239,68,68,.12)',on:false,
+   desc:'Issues a draft acknowledgement and logs the complaint. If the complaint references prior incidents or uses formal language, escalates to human review instead of auto-drafting.',
+   tags:['Auto-Draft','Log Complaint','Escalate Repeat']},
+];
+
+const INTEGRATIONS = [
+  {icon:'📧',name:'Gmail',bg:'rgba(234,67,53,.15)',status:'connected',action:'Manage',
+   desc:'Live sync for jlivingstone78@gmail.com. All incoming and outgoing emails are processed through PropMind AI in real time.'},
+  {icon:'📬',name:'Microsoft 365',bg:'rgba(0,120,212,.15)',status:'disconnected',action:'Connect',
+   desc:'Sync Outlook mailboxes and calendar. Connect to process emails from any Microsoft 365 or Exchange account.'},
+  {icon:'⚡',name:'Nylas Email Sync',bg:'rgba(139,92,246,.15)',status:'soon',action:'Coming Soon',
+   desc:'High-volume email sync API. Enables real-time webhook delivery and multi-mailbox management at scale.'},
+  {icon:'🏠',name:'PropertyMe',bg:'rgba(16,185,129,.15)',status:'disconnected',action:'Connect',
+   desc:"Australia's leading property management platform. Sync tenants, properties, maintenance requests and owner statements automatically."},
+  {icon:'🏗️',name:'REST Professional',bg:'rgba(59,130,246,.15)',status:'disconnected',action:'Connect',
+   desc:'Connect REST trust accounting and property data. Auto-populate tenant details and lease information in AI drafts.'},
+  {icon:'💬',name:'Slack',bg:'rgba(74,21,75,.22)',status:'disconnected',action:'Connect',
+   desc:'Get instant notifications in Slack for urgent emails and escalations. Route alerts to any channel or DM.'},
+  {icon:'🔗',name:'Zapier',bg:'rgba(255,79,0,.15)',status:'soon',action:'Coming Soon',
+   desc:'Connect PropMind to 5,000+ apps. Automate: new email → CRM record, draft sent → task created, and more.'},
+  {icon:'📊',name:'Console Cloud',bg:'rgba(245,158,11,.15)',status:'disconnected',action:'Connect',
+   desc:'Sync property and tenant data from Console Cloud. Keep your portfolio and contact list always up to date.'},
+  {icon:'📱',name:'SMS Alerts',bg:'rgba(6,182,212,.15)',status:'disconnected',action:'Connect',
+   desc:'Send automated SMS alerts for urgent maintenance, overdue rent, and emergency escalations via Twilio.'},
+];
+
+/* ─── PAGE RENDER FUNCTIONS ─── */
+let _propsRendered = false, _rulesRendered = false, _intRendered = false;
+
+function renderInbox(filter) {
+  const urgC = EM.filter(e => e.urg || e.panel==='urgent').length;
+  const revC = EM.filter(e => e.panel==='review').length;
+  const dftC = EM.filter(e => e.sc==='ds-g').length;
+  document.getElementById('inbox-cnt-all').textContent = EM.length;
+  document.getElementById('inbox-cnt-urgent').textContent = urgC;
+  document.getElementById('inbox-cnt-review').textContent = revC;
+  document.getElementById('inbox-cnt-draft').textContent = dftC;
+  let list = [...EM];
+  if (filter === 'urgent') list = list.filter(e => e.urg || e.panel==='urgent');
+  else if (filter === 'review') list = list.filter(e => e.panel==='review');
+  else if (filter === 'draft') list = list.filter(e => e.sc==='ds-g');
+  document.getElementById('inbox-list').innerHTML = list.length
+    ? list.map(buildRow).join('')
+    : '<div style="padding:44px;text-align:center;color:var(--t3);font-size:13px">No emails in this filter</div>';
+}
+
+function filterInbox(el, filter) {
+  document.querySelectorAll('#inbox-filters .ftab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderInbox(filter);
+}
+
+function renderDrafts() {
+  const drafts = EM.filter(e => e.sc === 'ds-g');
+  const avgConf = drafts.length
+    ? Math.round(drafts.reduce((s,e) => s + e.conf, 0) / drafts.length) : 0;
+  document.getElementById('drafts-badge').textContent = drafts.length;
+  document.getElementById('drafts-batch-info').textContent =
+    `${drafts.length} drafts ready · avg confidence ${avgConf}%`;
+  document.getElementById('drafts-list').innerHTML = drafts.length
+    ? drafts.map(buildRow).join('')
+    : '<div style="padding:44px;text-align:center;color:var(--t3);font-size:13px">No drafts ready</div>';
+}
+
+function renderReview() {
+  const items = EM.filter(e => e.panel==='urgent' || e.panel==='review')
+    .sort((a,b) => urgScore(a) - urgScore(b));
+  document.getElementById('review-badge').textContent = items.length;
+  document.getElementById('review-list').innerHTML = items.length
+    ? items.map(buildRow).join('')
+    : '<div style="padding:44px;text-align:center;color:var(--t3);font-size:13px">Review queue is clear</div>';
+}
+
+function renderProperties() {
+  if (_propsRendered) return;
+  _propsRendered = true;
+  const grid = document.getElementById('prop-grid');
+  PROPS.forEach(p => {
+    const sc = p.status==='maintenance' ? 'st-maintenance' : p.status==='vacant' ? 'st-vacant' : 'st-active';
+    const bc = p.status==='maintenance' ? 'pb-maint' : p.status==='vacant' ? 'pb-vacant' : 'pb-active';
+    const bt = p.status==='maintenance' ? 'Maintenance' : p.status==='vacant' ? 'Vacant' : 'Active';
+    const ut = p.units===1 ? 'House' : `${p.units} Units`;
+    grid.insertAdjacentHTML('beforeend',
+      `<div class="prop-card ${sc}">
+        <div class="prop-addr">${esc(p.addr)}</div>
+        <div class="prop-suburb">${esc(p.city)}</div>
+        <div class="prop-stats">
+          <div><div class="prop-stat-val">${p.emails}</div><div class="prop-stat-lbl">Emails</div></div>
+          <div><div class="prop-stat-val" style="color:var(--t2)">${ut}</div><div class="prop-stat-lbl">Type</div></div>
+        </div>
+        <div class="prop-foot">
+          <span class="prop-last">Last activity: ${esc(p.last)}</span>
+          <span class="pbadge ${bc}">${bt}</span>
+        </div>
+      </div>`);
+  });
+}
+
+function renderRules() {
+  if (_rulesRendered) return;
+  _rulesRendered = true;
+  const c = document.getElementById('rules-container');
+  RULES.forEach(r => {
+    c.insertAdjacentHTML('beforeend',
+      `<div class="rule-card">
+        <div class="rule-icon" style="background:${r.bg}">${r.icon}</div>
+        <div class="rule-body">
+          <div class="rule-title">${esc(r.title)}</div>
+          <div class="rule-desc">${esc(r.desc)}</div>
+          <div class="rule-tags">${r.tags.map(t=>`<span class="rtag">${esc(t)}</span>`).join('')}</div>
+        </div>
+        <label class="toggle"><input type="checkbox" ${r.on?'checked':''}><span class="tslider"></span></label>
+      </div>`);
+  });
+}
+
+function renderIntegrations() {
+  if (_intRendered) return;
+  _intRendered = true;
+  const g = document.getElementById('int-grid');
+  INTEGRATIONS.forEach(i => {
+    const sc = i.status==='connected' ? 'is-con' : i.status==='soon' ? 'is-soon' : 'is-dis';
+    const dc = i.status==='connected' ? 'idot-c' : i.status==='soon' ? 'idot-s' : 'idot-d';
+    const st = i.status==='connected' ? 'Connected' : i.status==='soon' ? 'Coming Soon' : 'Not Connected';
+    const isPrim = i.status==='disconnected';
+    const isDisabled = i.status==='soon';
+    g.insertAdjacentHTML('beforeend',
+      `<div class="int-card">
+        <div class="int-top">
+          <div class="int-logo" style="background:${i.bg}">${i.icon}</div>
+          <div class="int-name">${esc(i.name)}</div>
+        </div>
+        <div class="int-desc">${esc(i.desc)}</div>
+        <div class="int-foot">
+          <div class="int-status ${sc}"><div class="idot ${dc}"></div>${st}</div>
+          <button class="int-btn${isPrim?' prim':''}" ${isDisabled?'disabled':''}>${esc(i.action)}</button>
+        </div>
+      </div>`);
+  });
+}
+
+function sendAllDrafts() {
+  const btn = document.getElementById('send-all-btn');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '✓ All Sent';
+  btn.style.cssText = 'background:var(--grn);box-shadow:0 3px 10px var(--grnG)';
+  setTimeout(() => { btn.innerHTML = orig; btn.style.cssText = ''; }, 3000);
+}
+
+let _settingsFiltered = false;
+function showSettingsSection(el, id) {
+  document.querySelectorAll('.snav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  _settingsFiltered = true;
+  document.querySelectorAll('.sct').forEach(s => s.style.display='none');
+  const target = document.getElementById('section-'+id);
+  if (target) target.style.display='';
+}
+
+/* ─── INIT SIDEBAR BADGES ─── */
+(function initBadges() {
+  const d = EM.filter(e => e.sc==='ds-g').length;
+  const r = EM.filter(e => e.panel==='urgent'||e.panel==='review').length;
+  document.getElementById('drafts-badge').textContent = d;
+  document.getElementById('review-badge').textContent = r;
+}());
 
 /* ─── ANALYTICS CHARTS ─── */
 let _analyticsReady = false;
